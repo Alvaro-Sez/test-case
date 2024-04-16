@@ -1,6 +1,6 @@
 using DotNetCore.CAP;
 using Microsoft.AspNetCore.Mvc;
-using Write.Contacts;
+using Write.Contacts.Events;
 
 namespace ClayLocks.Controllers.Write;
 

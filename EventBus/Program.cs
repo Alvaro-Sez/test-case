@@ -1,6 +1,6 @@
 using EventBus;
-using Read.Implementation.Module;
-using Write.Implementation.Module;
+using Read.Implementation.DI;
+using Write.Implementation.DI;
 
 var builder = Host.CreateApplicationBuilder(args);
 

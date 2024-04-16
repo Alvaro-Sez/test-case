@@ -1,6 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Write.Implementation.Module;
+namespace Write.Implementation.DI;
 
 public static class ConfigureServices
 {
