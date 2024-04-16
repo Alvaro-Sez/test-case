@@ -1,7 +1,10 @@
+using ClayLocks.Configuration;
 using Read.Implementation.DI;
 using Write.Implementation.DI;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.WebHost.AddClientCert();//could not implement in in docker
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

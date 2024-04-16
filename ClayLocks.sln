@@ -26,6 +26,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Read.Data", "Read.Data\Read
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Write.Data", "Write.Data\Write.Data.csproj", "{4231262F-1829-48C0-A256-D8CF296DB813}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "Shared\Shared.csproj", "{82D29A51-AC26-496C-B137-F65DFA0BCB9B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -72,6 +74,10 @@ Global
 		{4231262F-1829-48C0-A256-D8CF296DB813}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4231262F-1829-48C0-A256-D8CF296DB813}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4231262F-1829-48C0-A256-D8CF296DB813}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82D29A51-AC26-496C-B137-F65DFA0BCB9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82D29A51-AC26-496C-B137-F65DFA0BCB9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82D29A51-AC26-496C-B137-F65DFA0BCB9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82D29A51-AC26-496C-B137-F65DFA0BCB9B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{A316267C-9055-454A-91A4-330CB94CEE07} = {1F455F03-2C73-4526-BB45-5534A4DFF7CC}

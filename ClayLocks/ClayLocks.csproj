@@ -12,17 +12,16 @@
         <PackageReference Include="DotNetCore.CAP.Dashboard" Version="8.0.0" />
         <PackageReference Include="DotNetCore.CAP.InMemoryStorage" Version="8.0.0" />
         <PackageReference Include="DotNetCore.CAP.RabbitMQ" Version="8.0.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.0" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.1"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.0" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0"/>
+        <PackageReference Include="Swashbuckle.AspNetCore.Filters" Version="8.0.0" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\Read.Implementation\Read.Implementation.csproj" />
       <ProjectReference Include="..\Write.Implementation\Write.Implementation.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Controllers\Read\" />
     </ItemGroup>
 
 </Project>

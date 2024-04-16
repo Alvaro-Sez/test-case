@@ -1,7 +1,8 @@
 
 using Api.Commands.Domain.Ports;
+using Write.Contacts.Repository;
 
-namespace Write.Data.Repositories;
+namespace Write.Data.Repository;
 
 public class UnitOfWork : IUnitOfWork
 {

@@ -1,4 +1,4 @@
-namespace Api.Commands.Domain.Ports;
+namespace Write.Contacts.Repository;
 
 public interface IUnitOfWork
 {

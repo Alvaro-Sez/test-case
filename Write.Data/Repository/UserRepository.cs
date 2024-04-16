@@ -1,7 +1,7 @@
 using Write.Contacts.Entities;
 using Write.Contacts.Repository;
 
-namespace Write.Data.Repositories;
+namespace Write.Data.Repository;
 
 public class UserRepository : IUserRepository
 {

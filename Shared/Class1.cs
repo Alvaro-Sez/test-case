@@ -1,4 +1,4 @@
-﻿namespace Read.Data;
+﻿namespace Shared;
 
 public class Class1
 {
