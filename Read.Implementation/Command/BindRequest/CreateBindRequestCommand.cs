@@ -1,10 +1,8 @@
-using Shared;
-using Write.Contacts.Commands;
+namespace Read.Implementation.Command.BindRequest;
 
-namespace Write.Implementation.Commands.BindRequests;
-
-public class CreateBindRequestCommand 
+public class CreateBindRequestCommand
 {
+    
     public CreateBindRequestCommand(string buildingName, string userToBind)
     {
         BuildingName = buildingName;

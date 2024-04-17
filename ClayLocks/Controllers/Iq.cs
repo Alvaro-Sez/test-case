@@ -22,6 +22,7 @@ public class Iq: ApiController
     [HttpPost] 
     public async Task<IActionResult> CreateIq(CreateIqDto dto)
     {
+        //TODO to test
         var result = await _handler.HandleAsync(new CreateIQCommand(dto.BuildingName));
         return ToActionResult(result);
     }

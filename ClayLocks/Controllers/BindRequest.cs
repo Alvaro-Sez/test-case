@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Read.Contracts.Entities;
-using Read.Implementation.Events;
+using Read.Implementation.Command.BindRequest;
 using Read.Implementation.Queries.BindRequest;
 using Write.Contacts.Commands;
 using Write.Contacts.Dto;
@@ -39,7 +39,7 @@ public class BindRequest : ApiController
         return ToActionResult(result);
     }
     [HttpGet] //Protected for admin and high users
-    public async Task<IActionResult> GetRequests()
+    public async Task<IActionResult> GetRequestsByIqOwnership()
     {
         var userIdpId = _userManager.GetUserId(User)!;
         var result = await _queryHandler.HandleAsync(new GetBindIqRequestsQuery(userIdpId));
