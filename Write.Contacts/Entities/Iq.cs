@@ -4,16 +4,16 @@ public class Iq
 {
     public Iq()
     {
-        
     }
-    public Iq(string buildingName, Guid id)
+    public Iq(string buildingName)
     {
         if(string.IsNullOrWhiteSpace(buildingName))
         {
             throw new ArgumentException();
         }
         BuildingName = buildingName;
-        Id = id;
+        Id = Guid.NewGuid();
+        Locks = Enumerable.Range(0, 16).Select(c => new Lock(Guid.NewGuid())).ToList();
     }
 
     public Guid Id { get; init; }
