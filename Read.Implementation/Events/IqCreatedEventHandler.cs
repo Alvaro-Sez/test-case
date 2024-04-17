@@ -22,6 +22,6 @@ public class IqCreatedEventHandler:  IEventHandler<IqCreatedEvent> ,ICapSubscrib
     public async Task Handle(IqCreatedEvent @event)
     {
         _logger.LogInformation($"Iq Created");
-        await _iqRepository.SetAsync(new Iq(@event.BuildingName));
+        // await _iqRepository.SetAsync(new Iq(@event.BuildingName));
     }
 }

@@ -20,7 +20,7 @@ public class Iq: ApiController
         _handler = handler;
         _getIqs = getIqs;
     }
-    [Authorize(Roles="Admin")]
+    //[Authorize(Roles="Admin")]//TODO
     [HttpPost] 
     public async Task<IActionResult> CreateIq(CreateIqDto dto)
     {

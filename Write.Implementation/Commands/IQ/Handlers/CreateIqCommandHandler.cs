@@ -23,7 +23,7 @@ public class CreateIqCommandHandler: ICommandHandler<CreateIQCommand>
     {
         var iq = await _iqRepository.GetByBuildingNameAsync(command.BuildingName);
         
-        if(iq != null)
+        if(iq is not null)
         {
             return Result.Failure(Errors.IqAlreadyExist);
         }
@@ -41,7 +41,7 @@ public class CreateIqCommandHandler: ICommandHandler<CreateIQCommand>
         {
             BuildingName = buildingName,
             Id = Guid.NewGuid(),
-            Locks = Enumerable.Range(0, 16).Select(c => new Lock(Guid.NewGuid()))
+            Locks = Enumerable.Range(0, 16).Select(c => new Lock(Guid.NewGuid())).ToList()
         };
     }
 }

@@ -14,8 +14,8 @@ public class UnitOfWork : IUnitOfWork
         _dbContext = dbContext;
     }
 
-    public Task SaveChangesAsync()
+    public async Task SaveChangesAsync()
     {
-        throw new NotImplementedException();
+        await _dbContext.SaveChangesAsync();
     }
 }

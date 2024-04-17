@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using Write.Contacts.Entities;
 using Write.Contacts.Repository;
 using Write.Data.EF;
@@ -16,9 +17,9 @@ public class IqRepository : IIqRepository
         throw new NotImplementedException();
     }
 
-    public Task AddAsync(Iq entity)
+    public async Task AddAsync(Iq entity)
     {
-        throw new NotImplementedException();
+        await _context.Iqs.AddAsync(entity);
     }
 
 
@@ -32,8 +33,9 @@ public class IqRepository : IIqRepository
         throw new NotImplementedException();
     }
 
-    public Task<Iq?> GetByBuildingNameAsync(string buildingName)
+    public async Task<Iq?> GetByBuildingNameAsync(string buildingName)
     {
-        throw new NotImplementedException();
+        return await _context.Iqs
+            .FirstOrDefaultAsync(c => string.Equals(buildingName, c.BuildingName));
     }
 }

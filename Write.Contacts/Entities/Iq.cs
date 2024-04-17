@@ -18,6 +18,6 @@ public class Iq
 
     public Guid Id { get; init; }
     public string BuildingName { get; init; }
-    public IEnumerable<Lock> Locks { get; init; }
-    public IEnumerable<User> Users { get; }
+    public ICollection<Lock> Locks { get; init; }
+    public ICollection<User> Users { get; }
 }
