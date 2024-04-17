@@ -1,14 +1,12 @@
-using System.Security.Claims;
-using ClayLocks.IDP;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Read.Contracts.Entities;
+using Read.Contracts.Queries;
 using Read.Implementation.Command.BindRequest;
 using Read.Implementation.Queries.BindRequest;
 using Write.Contacts.Commands;
 using Write.Contacts.Dto;
-using Write.Contacts.Queries;
 using Write.Implementation.Commands.BindRequests;
 
 namespace ClayLocks.Controllers;
@@ -17,15 +15,15 @@ namespace ClayLocks.Controllers;
 [ApiController]
 public class BindRequest : ApiController
 {
-    private readonly IQueryHandler<GetBindIqRequestsQuery,IEnumerable<BindIqRequest>> _queryHandler;
+    private readonly IQueryHandler<IEnumerable<BindIqRequest>> _queryHandler;
     private readonly UserManager<IdentityUser> _userManager;
-    private readonly ICommandHandler<CreateBindRequestCommand> _createBindRequestHandler;
+    private readonly Read.Contracts.Commands.ICommandHandler<CreateBindRequestCommand> _createBindRequestHandler;
     private readonly ICommandHandler<AcceptBindRequestCommand> _acceptBindRequestHandler;
 
     public BindRequest(
-        IQueryHandler<GetBindIqRequestsQuery,IEnumerable<BindIqRequest>> queryHandler,
+        IQueryHandler<IEnumerable<BindIqRequest>> queryHandler,
         UserManager<IdentityUser> userManager,
-        ICommandHandler<CreateBindRequestCommand> createBindRequestHandler,
+        Read.Contracts.Commands.ICommandHandler<CreateBindRequestCommand> createBindRequestHandler,
         ICommandHandler<AcceptBindRequestCommand> acceptBindRequestHandler)
         
     {
@@ -43,18 +41,18 @@ public class BindRequest : ApiController
         return ToActionResult(result);
     }
     [Authorize(Roles="Admin")]
-    [HttpGet] //Protected for admin and high users
+    [HttpGet] 
     public async Task<IActionResult> GetIqBindRequests()
     {
         var userIdpId = _userManager.GetUserId(User)!;
         
         var query = new GetBindIqRequestsQuery(userIdpId);
         
-        var result = await _queryHandler.HandleAsync(query);
+        var result = await _queryHandler.HandleAsync();
         return ToActionResult(result); 
     }
     [Authorize(Roles="Admin")]
-    [HttpPost("/accept")] 
+    [HttpPost("bind/accept")] 
     public async Task<IActionResult> AcceptRequest(AcceptRequestDto dto)
     {
         var userIdpId = _userManager.GetUserId(User)!;

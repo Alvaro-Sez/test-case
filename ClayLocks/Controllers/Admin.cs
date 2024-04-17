@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,7 +17,7 @@ public class Admin : ApiController
       _roleManager = roleManager;
       _userManager = userManager;
    }
-
+   [Authorize]
    [HttpGet] 
    public async Task<IActionResult> CreateAdmin()
    {

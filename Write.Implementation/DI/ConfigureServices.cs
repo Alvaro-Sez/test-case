@@ -1,5 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Write.Contacts.Commands;
+using Write.Implementation.Commands.BindRequests;
+using Write.Implementation.Commands.BindRequests.Handlers;
 using Write.Implementation.Commands.IQ;
 using Write.Implementation.Commands.IQ.Handlers;
 
@@ -10,5 +12,6 @@ public static class ConfigureServices
     public static void AddWriteServices(this IServiceCollection service)
     {
         service.AddScoped<ICommandHandler<CreateIQCommand>, CreateIqCommandHandler>();
+        service.AddScoped<ICommandHandler<AcceptBindRequestCommand>,AcceptBindRequestCommandHandler>();
     }
 }

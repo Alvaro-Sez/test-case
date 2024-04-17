@@ -11,5 +11,7 @@ public static class ConfigureServices
         service.AddSingleton<MongoDbContext>();
         service.AddScoped<IUserAccessRepository, UserAccessRepository>();
         service.AddScoped<IIqRepository,IqRepository>();
+        service.AddScoped<IBindRequestRepository,BindRequestRepository>();
+         
     }
 }

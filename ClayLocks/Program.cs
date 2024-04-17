@@ -9,11 +9,11 @@ using Write.Implementation.DI;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.WebHost.AddClientCert();//could not implement in in docker
+builder.WebHost.AddClientCert();//could not implement in docker
 
-builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddControllers();
-builder.Services.AddSwaggerGen();
+
+builder.Services.AddSwaggerConfiguration();
 
 builder.Services.AddReadServices();
 builder.Services.AddReadDataServices();
@@ -37,6 +37,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.MapIdentityApi<IdentityUser>();
 app.MapControllers();
 
 app.Run();

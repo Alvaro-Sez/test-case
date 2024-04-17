@@ -16,5 +16,7 @@ public static class ConfigureServices
         );
         service.AddScoped<IUnitOfWork, UnitOfWork>();
         service.AddScoped<IIqRepository,IqRepository>();
+        service.AddScoped<IUserRepository,UserRepository>();
+         
     }
 }

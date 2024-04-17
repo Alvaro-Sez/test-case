@@ -9,10 +9,15 @@ public static class IdpConfiguration
     {
        services.AddDbContext<IdentityData>(opt =>
            opt.UseInMemoryDatabase("IdpDatabase"));
-        services 
+       services
             .AddAuthorization()
             .AddIdentityApiEndpoints<IdentityUser>()
             .AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<IdentityData>();
+       //     .AddAuthorization()
+       //     
+       //     .AddUserManager<IdentityUser>()
+       //     .AddRoles<IdentityRole>()
+       //     .AddRoleManager<IdentityRole>()
     }
 }
