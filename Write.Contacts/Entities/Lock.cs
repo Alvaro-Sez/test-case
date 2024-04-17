@@ -7,9 +7,10 @@ public class Lock
         Id = id;
     }
     public Guid Id { get; init; }
-    public Access AccessRequired { get; private set; } = Access.Low;
+    public Access AccessLevel { get; private set; } = Access.Low;
+    public Iq Iq{ get; init; }
     public void UpgradeSecurity()
     {
-        AccessRequired = Access.High;
+        AccessLevel = Access.High;
     }
 }

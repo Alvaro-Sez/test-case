@@ -13,9 +13,12 @@ public class IqConfiguration: IEntityTypeConfiguration<Iq>
         builder.HasKey(c => c.Id).HasName("iq_pkey");
 
         builder.Property(c => c.BuildingName)
-                    .HasMaxLength(50)
-                    .HasColumnName("building_name").IsRequired();
+            .HasMaxLength(50)
+            .HasColumnName("building_name").IsRequired();
         
         builder.HasIndex(c => c.BuildingName).IsUnique();
+        builder
+            .HasMany(c => c.Locks)
+            .WithOne(c=>c.Iq);
     }
 }

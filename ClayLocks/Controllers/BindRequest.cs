@@ -32,7 +32,9 @@ public class BindRequest : ApiController
         _createBindRequestHandler = createBindRequestHandler;
         _acceptBindRequestHandler = acceptBindRequestHandler;
     }
-    [HttpPost] //TODO protected
+    
+    [Authorize]
+    [HttpPost("/create")] //TODO protected
     public async Task<IActionResult> CreateBindRequest(BindRequestDto dto)
     {
         var userIdpId = _userManager.GetUserId(User)!;
@@ -40,19 +42,17 @@ public class BindRequest : ApiController
             .HandleAsync(new CreateBindRequestCommand(dto.BuildingName,userIdpId));
         return ToActionResult(result);
     }
+    
     [Authorize(Roles="Admin")]
     [HttpGet] 
     public async Task<IActionResult> GetIqBindRequests()
     {
-        var userIdpId = _userManager.GetUserId(User)!;
-        
-        var query = new GetBindIqRequestsQuery(userIdpId);
-        
         var result = await _queryHandler.HandleAsync();
         return ToActionResult(result); 
     }
+    
     [Authorize(Roles="Admin")]
-    [HttpPost("bind/accept")] 
+    [HttpPost("/accept")] 
     public async Task<IActionResult> AcceptRequest(AcceptRequestDto dto)
     {
         var userIdpId = _userManager.GetUserId(User)!;
