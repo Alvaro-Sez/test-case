@@ -19,7 +19,7 @@ public class BindRequest : ApiController
     }
     
     [HttpPost] 
-    public Task<IActionResult> ManageRequest()
+    public Task<IActionResult> AcceptRequest()
     {
         throw new NotImplementedException();
     }

@@ -1,5 +1,6 @@
 using Write.Contacts.Entities;
 using Write.Contacts.Repository;
+using Write.Data.EF;
 
 namespace Write.Data.Repository;
 

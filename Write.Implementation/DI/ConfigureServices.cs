@@ -10,6 +10,5 @@ public static class ConfigureServices
     public static void AddWriteServices(this IServiceCollection service)
     {
         service.AddScoped<ICommandHandler<CreateIQCommand>, CreateIqCommandHandler>();
-        service.AddScoped<ICommandHandler<BindUserCommand>, BindUserCommandHandler>();
     }
 }
