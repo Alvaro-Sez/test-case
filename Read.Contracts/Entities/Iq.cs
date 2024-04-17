@@ -7,4 +7,5 @@ public class Iq
         BuildingName = buildingName;
     }
     public string BuildingName { get; init; }
+    public Guid Id { get; set; }
 }

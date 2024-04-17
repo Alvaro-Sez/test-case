@@ -1,6 +1,6 @@
 namespace Read.Data.Models;
 
-public class IqBuildingNames
+public class Iq
 {
     
 }

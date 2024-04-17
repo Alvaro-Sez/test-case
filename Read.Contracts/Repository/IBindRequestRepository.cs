@@ -4,5 +4,6 @@ namespace Read.Contracts.Repository;
 
 public interface IBindRequestRepository: IRepository<BindIqRequest>
 {
-    
+    Task<IEnumerable<BindIqRequest>> GetAllAsync();
+
 }

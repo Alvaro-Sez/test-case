@@ -7,7 +7,7 @@ using Write.Contacts.Events;
 
 namespace Read.Implementation.Events;
 
-public class IqCreatedEventHandler:  IEventHandler<IqCreated> ,ICapSubscribe
+public class IqCreatedEventHandler:  IEventHandler<IqCreatedEvent> ,ICapSubscribe
 {
     private readonly ILogger<IqCreatedEventHandler> _logger;
     private readonly IIqRepository _iqRepository;
@@ -18,10 +18,10 @@ public class IqCreatedEventHandler:  IEventHandler<IqCreated> ,ICapSubscribe
         _iqRepository = iqRepository;
     }
     
-    [CapSubscribe(nameof(IqCreated))]
-    public async Task Handle(IqCreated iqCreated)
+    [CapSubscribe(nameof(IqCreatedEvent))]
+    public async Task Handle(IqCreatedEvent @event)
     {
         _logger.LogInformation($"Iq Created");
-        await _iqRepository.SetAsync(new Iq(iqCreated.BuildingName));
+        await _iqRepository.SetAsync(new Iq(@event.BuildingName));
     }
 }

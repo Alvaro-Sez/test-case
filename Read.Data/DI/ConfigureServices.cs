@@ -9,7 +9,7 @@ public static class ConfigureServices
     public static void AddReadDataServices(this IServiceCollection service)
     {
         service.AddSingleton<MongoDbContext>();
-        service.AddScoped<IAccessRepository, AccessRepository>();
+        service.AddScoped<IUserAccessRepository, UserAccessRepository>();
         service.AddScoped<IIqRepository,IqRepository>();
     }
 }

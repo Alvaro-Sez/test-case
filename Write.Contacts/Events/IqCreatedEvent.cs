@@ -1,8 +1,8 @@
 namespace Write.Contacts.Events;
 
-public class IqCreated
+public class IqCreatedEvent
 {
-    public IqCreated(string buildingName)
+    public IqCreatedEvent(string buildingName)
     {
         BuildingName = buildingName;
     }

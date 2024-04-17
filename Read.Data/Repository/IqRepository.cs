@@ -9,6 +9,12 @@ public class IqRepository : IIqRepository
     {
         throw new NotImplementedException();
     }
+
+    public Task<Iq> GetAsync(Guid id)
+    {
+        throw new NotImplementedException();
+    }
+
     public Task<string> GetByBuildingNameAsync(string buildingName)
     {
         throw new NotImplementedException();

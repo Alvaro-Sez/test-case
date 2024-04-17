@@ -30,7 +30,7 @@ public class CreateIqCommandHandler: ICommandHandler<CreateIQCommand>
         await _iqRepository.AddAsync(GenerateIq(command.BuildingName));
         await _unitOfWork.SaveChangesAsync();
         
-        await _capPublisher.PublishAsync(nameof(IqCreated), new IqCreated(command.BuildingName));
+        await _capPublisher.PublishAsync(nameof(IqCreatedEvent), new IqCreatedEvent(command.BuildingName));
         
         return Result.Success();
     }

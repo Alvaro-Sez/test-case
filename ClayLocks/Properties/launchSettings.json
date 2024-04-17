@@ -17,7 +17,9 @@
       "applicationUrl": "http://localhost:5000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "ENV_MONGO_URL": "mongodb://localhost:27017"
+        "ENV_MONGO_URL": "mongodb://localhost:27017",
+        "ENV_SQL_URL": "Server=localhost;Database=Clay-Locks;User Id=sa;Password=123456Aa?;TrustServerCertificate=True",
+        "ENV_RABBIT": "localhost"
       }
     },
     "https": {

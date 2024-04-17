@@ -22,6 +22,10 @@ public abstract class ApiController : ControllerBase
       {
          return BadRequest(result.Error.Code);
       }
+      if(result.Value is null)
+      {
+         return NoContent();
+      }
       return Ok(result.Value);
    }
 }
