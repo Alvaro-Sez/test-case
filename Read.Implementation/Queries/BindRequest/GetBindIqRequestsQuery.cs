@@ -1,6 +1,4 @@
-using Write.Contacts.Queries;
-
-namespace Write.Implementation.Queries.BindRequest;
+namespace Read.Implementation.Queries.BindRequest;
 
 public class GetBindIqRequestsQuery 
 {
@@ -9,5 +7,5 @@ public class GetBindIqRequestsQuery
         UserId = userId;
     }
 
-    public string UserId { get; set; }
+    public string? UserId { get; set; }
 }

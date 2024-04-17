@@ -2,12 +2,14 @@ namespace Write.Implementation.Commands.BindRequests;
 
 public class AcceptBindRequestCommand
 {
-    public AcceptBindRequestCommand(string buildingName, Guid userToBind)
+    public AcceptBindRequestCommand(string buildingName, string userToBind, string authorizer)
     {
         BuildingName = buildingName;
-        UserToBind = userToBind;
+        UserToBind = Guid.Parse(userToBind);
+        Authorizer = Guid.Parse(authorizer);
     }
 
     public string BuildingName { get; set; }
+    public Guid Authorizer { get; set; }
     public Guid UserToBind { get; set; }
 }

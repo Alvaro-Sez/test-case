@@ -12,13 +12,11 @@ public class ApplicationDbContext : DbContext
     }
     public DbSet<Iq>  Iqs => Set<Iq>();
     public DbSet<User> Users => Set<User>();
-    public DbSet<BindIqRequest>  BindRequests => Set<BindIqRequest>();
     
     protected override void OnModelCreating(ModelBuilder builder)
     {
         builder.ApplyConfiguration(new IqConfiguration());
         builder.ApplyConfiguration(new UserConfiguration());
-        builder.ApplyConfiguration(new BindRequestConfiguration());
     }
     
 }

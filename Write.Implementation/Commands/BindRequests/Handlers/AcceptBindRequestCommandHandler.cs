@@ -2,7 +2,6 @@ using Shared;
 using Write.Contacts.Commands;
 using Write.Contacts.Entities;
 using Write.Contacts.Repository;
-using Write.Implementation.Error;
 
 namespace Write.Implementation.Commands.BindRequests.Handlers;
 

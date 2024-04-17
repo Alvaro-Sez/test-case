@@ -5,12 +5,12 @@ namespace Write.Implementation.Commands.BindRequests;
 
 public class CreateBindRequestCommand 
 {
-    public CreateBindRequestCommand(string buildingName, Guid userToBind)
+    public CreateBindRequestCommand(string buildingName, string userToBind)
     {
         BuildingName = buildingName;
         UserToBind = userToBind;
     }
 
     public string BuildingName { get; set; }
-    public Guid UserToBind { get; set; }
+    public string UserToBind { get; set; }
 }

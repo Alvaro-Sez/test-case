@@ -23,14 +23,13 @@ public class Iq: ApiController
     public async Task<IActionResult> CreateIq(CreateIqDto dto)
     {
         var result = await _handler.HandleAsync(new CreateIQCommand(dto.BuildingName));
-        
-        return await RespondAsync(result);
+        return ToActionResult(result);
     }
     
     [HttpGet] 
     public async Task<IActionResult> GetIqs()
     {
         var iqs = await _getIqs.HandleAsync();
-        return await RespondAsync(iqs);
+        return ToActionResult(iqs);
     }
 }

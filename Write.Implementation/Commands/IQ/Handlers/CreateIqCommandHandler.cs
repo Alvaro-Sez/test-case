@@ -4,7 +4,6 @@ using Write.Contacts.Commands;
 using Write.Contacts.Entities;
 using Write.Contacts.Events;
 using Write.Contacts.Repository;
-using Write.Implementation.Error;
 
 namespace Write.Implementation.Commands.IQ.Handlers;
 

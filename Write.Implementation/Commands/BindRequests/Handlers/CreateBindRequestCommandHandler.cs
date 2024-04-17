@@ -1,20 +1,20 @@
+using DotNetCore.CAP;
+using Read.Implementation.Events;
 using Shared;
 using Write.Contacts.Commands;
-using Write.Contacts.Entities;
 using Write.Contacts.Repository;
-using Write.Implementation.Error;
 
 namespace Write.Implementation.Commands.BindRequests.Handlers;
 
 public class CreateBindRequestCommandHandler : ICommandHandler<CreateBindRequestCommand>
 {
-    private readonly IBindRequestRepository _requestRepository;
+    private readonly ICapPublisher _publisher;
     private readonly IIqRepository _iqRepository;
     private readonly IUnitOfWork _unitOfWork;
     
-    public CreateBindRequestCommandHandler(IBindRequestRepository requestRepository, IIqRepository iqRepository, IUnitOfWork unitOfWork)
+    public CreateBindRequestCommandHandler(ICapPublisher publisher, IIqRepository iqRepository, IUnitOfWork unitOfWork)
     {
-        _requestRepository = requestRepository;
+        _publisher = publisher;
         _iqRepository = iqRepository;
         _unitOfWork = unitOfWork;
     }
@@ -27,14 +27,13 @@ public class CreateBindRequestCommandHandler : ICommandHandler<CreateBindRequest
             return Result.Failure(Errors.IqDontExist);
         }
         
-        var bindRequest = new BindIqRequest()
+        var bindRequest = new BindIqRequestAccepted()
         {
-            Id = Guid.NewGuid(),
             AuthorId = command.UserToBind,
-            IqId = requestedIq.Id
+            IqId = requestedIq.Id.ToString()
         };
-        await _requestRepository.AddAsync(bindRequest);
-        await _unitOfWork.SaveChangesAsync();
+
+        await _publisher.PublishAsync(nameof(BindIqRequestAccepted),bindRequest);
         
         return Result.Success();
     }

@@ -7,7 +7,7 @@ namespace ClayLocks;
 public abstract class ApiController : ControllerBase
 {
 
-   protected async Task<IActionResult> RespondAsync(Result result)
+   protected IActionResult ToActionResult(Result result)
    {
       if (!result.IsSuccess)
       {
@@ -16,7 +16,7 @@ public abstract class ApiController : ControllerBase
       return Ok();
    }
    
-   protected async Task<IActionResult> RespondAsync<T>(Result<T> result)
+   protected IActionResult ToActionResult<T>(Result<T> result)
    {
       if (!result.IsSuccess)
       {
