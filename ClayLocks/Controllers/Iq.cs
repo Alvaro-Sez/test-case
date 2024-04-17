@@ -1,5 +1,6 @@
-using DotNetCore.CAP;
 using Microsoft.AspNetCore.Mvc;
+using Read.Contracts.Queries;
+using Shared;
 using Write.Contacts.Commands;
 using Write.Contacts.Dto;
 using Write.Implementation.Commands.IQ;
@@ -10,26 +11,26 @@ namespace ClayLocks.Controllers;
 [ApiController]
 public class Iq: ApiController
 {
-    private readonly ICapPublisher _capPublisher;
     private readonly ICommandHandler<CreateIQCommand> _handler;
+    private readonly IQueryHandler<IEnumerable<string>> _getIqs;
 
-    public Iq(ICapPublisher capPublisher, ICommandHandler<CreateIQCommand> handler)
+    public Iq(ICommandHandler<CreateIQCommand> handler, IQueryHandler<IEnumerable<string>> getIqs)
     {
-        _capPublisher = capPublisher;
         _handler = handler;
+        _getIqs = getIqs;
     }
     [HttpPost] 
     public async Task<IActionResult> CreateIq(CreateIqDto dto)
     {
-        // mapping
-        await _handler.HandleAsync(new CreateIQCommand());
-        //validation
-        return Ok("added iq");
+        var result = await _handler.HandleAsync(new CreateIQCommand(dto.BuildingName));
+        
+        return await RespondAsync(result);
     }
     
     [HttpGet] 
-    public Task<IActionResult> GetIqs()
+    public async Task<IActionResult> GetIqs()
     {
-        throw new NotImplementedException();
+        var iqs = await _getIqs.HandleAsync();
+        return await RespondAsync(iqs);
     }
 }

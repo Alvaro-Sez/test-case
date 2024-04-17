@@ -3,10 +3,14 @@ using Write.Contacts.Commands;
 
 namespace Write.Implementation.Commands.BindRequests;
 
-public class CreateBindRequestCommand : ICommandHandler<CreateBindRequestCommand>
+public class CreateBindRequestCommand 
 {
-    public Task<Result> HandleAsync(CreateBindRequestCommand command)
+    public CreateBindRequestCommand(string buildingName, Guid userToBind)
     {
-        throw new NotImplementedException();
+        BuildingName = buildingName;
+        UserToBind = userToBind;
     }
+
+    public string BuildingName { get; set; }
+    public Guid UserToBind { get; set; }
 }

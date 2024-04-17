@@ -20,6 +20,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Read.Data\Read.Data.csproj" />
       <ProjectReference Include="..\Read.Implementation\Read.Implementation.csproj" />
       <ProjectReference Include="..\Write.Implementation\Write.Implementation.csproj" />
     </ItemGroup>

@@ -5,8 +5,8 @@ namespace Read.Implementation.DI;
 
 public static class ConfigureServices
 {
-    public static   void  AddReadServices(this IServiceCollection service)
+    public static void AddReadServices(this IServiceCollection service)
     {
-        service.AddTransient<HandleIqCreated>();
+        service.AddTransient<IqCreatedEventHandler>();
     }
 }

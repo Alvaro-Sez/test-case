@@ -1,6 +1,8 @@
+using Shared;
+
 namespace Read.Contracts.Queries;
 
-public interface IQueryHandler<TQuery, TResult>
+public interface IQueryHandler<TResult>
 {
-    Task<TResult> HandleAsync(TQuery query);
+    Task<Result<TResult>> HandleAsync();
 }

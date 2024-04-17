@@ -1,15 +1,18 @@
 using DotNetCore.CAP;
 using Shared;
 using Write.Contacts.Commands;
+using Write.Contacts.Entities;
+using Write.Contacts.Events;
 using Write.Contacts.Repository;
+using Write.Implementation.Error;
 
 namespace Write.Implementation.Commands.IQ.Handlers;
 
 public class CreateIqCommandHandler: ICommandHandler<CreateIQCommand>
 {
+    private readonly ICapPublisher _capPublisher;
     private readonly IIqRepository _iqRepository;
     private readonly IUnitOfWork _unitOfWork;
-    private readonly ICapPublisher _capPublisher;
     public CreateIqCommandHandler(IUnitOfWork unitOfWork, IIqRepository iqRepository, ICapPublisher capPublisher)
     {
         _unitOfWork = unitOfWork;
@@ -17,8 +20,29 @@ public class CreateIqCommandHandler: ICommandHandler<CreateIQCommand>
         _capPublisher = capPublisher;
     }
 
-    public Task<Result> HandleAsync(CreateIQCommand command)
+    public async Task<Result> HandleAsync(CreateIQCommand command)
     {
-        throw new NotImplementedException();
+        var iq = await _iqRepository.GetByBuildingNameAsync(command.BuildingName);
+        
+        if(iq != null)
+        {
+            return Result.Failure(Errors.IqAlreadyExist);
+        }
+        await _iqRepository.AddAsync(GenerateIq(command.BuildingName));
+        await _unitOfWork.SaveChangesAsync();
+        
+        await _capPublisher.PublishAsync(nameof(IqCreated), new IqCreated(command.BuildingName));
+        
+        return Result.Success();
+    }
+    
+    private Iq GenerateIq(string buildingName)
+    {
+        return new Iq()
+        {
+            BuildingName = buildingName,
+            Id = Guid.NewGuid(),
+            LockPool = Enumerable.Range(0, 16).Select(c => new Lock(Guid.NewGuid()))
+        };
     }
 }

@@ -7,8 +7,20 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="DI\" />
-      <Folder Include="Repository\" />
+      <PackageReference Include="MongoDB.Driver" Version="2.25.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions">
+        <HintPath>..\..\..\..\..\.nuget\packages\microsoft.extensions.dependencyinjection.abstractions\8.0.0\lib\net8.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+      </Reference>
+      <Reference Include="Microsoft.Extensions.Options">
+        <HintPath>..\..\..\..\..\.nuget\packages\microsoft.extensions.options\8.0.0\lib\net8.0\Microsoft.Extensions.Options.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Read.Contracts\Read.Contracts.csproj" />
     </ItemGroup>
 
 </Project>

@@ -8,5 +8,5 @@ public class BindRequestDto(string buildingName)
     public string BuildingName { get; set; } = buildingName;
 
     [Required]
-    public Guid IdpId{ get; set; }
+    public Guid UserToBind{ get; set; }
 }

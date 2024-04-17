@@ -1,4 +1,5 @@
 using ClayLocks.Configuration;
+using Read.Data.DI;
 using Read.Implementation.DI;
 using Write.Implementation.DI;
 
@@ -9,8 +10,10 @@ builder.WebHost.AddClientCert();//could not implement in in docker
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddReadServices();
+builder.Services.AddReadDataServices();
 builder.Services.AddWriteServices();
 builder.Services.AddControllers();
+
 builder.Services.AddCap(options =>
 {
     options.UseInMemoryStorage();

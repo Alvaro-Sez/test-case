@@ -11,4 +11,8 @@ public class Result<TValue> : Result
     public TValue Value => IsSuccess
         ? _value!
         : throw new InvalidOperationException("The value of a failure result can not be accessed.");
+    public static Result<TValue> From (TValue value)
+    {
+        return new Result<TValue>(value, true, Error.None);
+    }
 }

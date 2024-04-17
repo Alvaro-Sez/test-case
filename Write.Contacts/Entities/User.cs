@@ -12,5 +12,5 @@ public class User
     }
     public Guid Id { get; init; }
     public List<Iq> IqAssigned { get; set; } = new();
-    public Access AccessLevel { get; set; } = Access.None;
+    public Access AccessLevel { get; set; } = Access.Low;
 }
