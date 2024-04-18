@@ -2,7 +2,7 @@ using Shared;
 
 namespace Read.Contracts.Queries;
 
-public interface IQueryHandler<TResult>
+public interface IQueryHandler<TQuery>
 {
-    Task<Result<TResult>> HandleAsync();
+    Task<Result<TQuery>> HandleAsync();
 }

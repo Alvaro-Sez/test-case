@@ -4,7 +4,7 @@ using Shared;
 
 namespace Read.Implementation.Queries.IQ.Handlers;
 
-public class GetIqsQueryHandler : IQueryHandler<IEnumerable<string>>
+public class GetIqsQueryHandler : IQueryHandler<GetIqsQuery>
 {
     private readonly IIqBuildingNamesRepository _iqRepository;
 
@@ -13,10 +13,10 @@ public class GetIqsQueryHandler : IQueryHandler<IEnumerable<string>>
         _iqRepository = iqRepository;
     }
 
-    public async Task<Result<IEnumerable<string>>> HandleAsync()
+    public async Task<Result<GetIqsQuery>> HandleAsync()
     {
         var iqNames = await _iqRepository.GetAllAsync();
-        
-        return Result<IEnumerable<string>>.From(iqNames.Select(c => c.BuildingName));
+        var query = new GetIqsQuery { IqBuildingNames = iqNames.Select(c => c.BuildingName)};
+        return Result<GetIqsQuery>.From(query);
     }
 }

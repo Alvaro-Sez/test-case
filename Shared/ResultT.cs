@@ -15,4 +15,6 @@ public class Result<TValue> : Result
     {
         return new Result<TValue>(value, true, Error.None);
     }
+    
+    public new static Result<TValue> Failure(Error error) => new(default(TValue) , false, error);
 }

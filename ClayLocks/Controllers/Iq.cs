@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Read.Contracts.Queries;
-using Shared;
+using Read.Implementation.Queries.IQ;
 using Write.Contacts.Commands;
 using Write.Implementation.Commands.IQ;
 using Write.Implementation.Dto;
@@ -13,9 +13,9 @@ namespace ClayLocks.Controllers;
 public class Iq: ApiController
 {
     private readonly ICommandHandler<CreateIQCommand> _handler;
-    private readonly IQueryHandler<IEnumerable<string>> _getIqs;
+    private readonly IQueryHandler<GetIqsQuery> _getIqs;
 
-    public Iq(ICommandHandler<CreateIQCommand> handler, IQueryHandler<IEnumerable<string>> getIqs)
+    public Iq(ICommandHandler<CreateIQCommand> handler, IQueryHandler<GetIqsQuery> getIqs)
     {
         _handler = handler;
         _getIqs = getIqs;
@@ -32,6 +32,7 @@ public class Iq: ApiController
     public async Task<IActionResult> GetAll()
     {
         var iqs = await _getIqs.HandleAsync();
+        
         return ToActionResult(iqs);
     }
 }

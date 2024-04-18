@@ -2,16 +2,16 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ClayLocks.Controllers;
 
-[Route("permission")]
+[Route("[controller]/[action]")]
 [ApiController]
-public class Permissions : ApiController 
+public class Access : ApiController 
 {
-    //
-    // [HttpPost] 
-    // public Task<IActionResult> RequestLockPermission()
-    // {
-    //     throw new NotImplementedException();
-    // }
+    
+    [HttpGet] 
+    public Task<IActionResult> GetLocks()
+    {
+        throw new NotImplementedException();
+    }
     // [HttpPost] 
     // public Task<IActionResult> RequestHigherPermission()
     // {
