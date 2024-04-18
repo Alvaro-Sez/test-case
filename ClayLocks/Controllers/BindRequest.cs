@@ -1,3 +1,4 @@
+using ClayLocks.IDP;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -43,7 +44,7 @@ public class BindRequest : ApiController
         return ToActionResult(result);
     }
     
-    [Authorize(Roles="Admin")]
+    [Authorize(Roles=Roles.Admin)]
     [HttpGet] 
     public async Task<IActionResult> GetAll()
     {
@@ -51,9 +52,9 @@ public class BindRequest : ApiController
         return ToActionResult(result); 
     }
     
-    [Authorize(Roles="Admin")]
+    [Authorize(Roles=Roles.Admin)]
     [HttpPost] 
-    public async Task<IActionResult> Accept(AcceptRequestDto dto)
+    public async Task<IActionResult> Accept(AcceptBindRequestDto dto)
     {
         var userIdpId = _userManager.GetUserId(User)!;
         var result = await _acceptBindRequestHandler.HandleAsync(new AcceptBindRequestCommand(dto.BuildingName, dto.UserToBind, userIdpId));

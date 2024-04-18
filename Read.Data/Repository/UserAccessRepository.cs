@@ -17,11 +17,11 @@ internal class UserAccessRepository : IUserAccessRepository
         await _accessCollection.InsertOneAsync(Map.ToModel(entity));
     }
 
-    public async Task<UserAccess> GetAsync(Guid id)
+    public async Task<UserAccess?> GetAsync(Guid id)
     {
         var result = await _accessCollection
             .FindAsync(c=> c.Id == id);
-        return  Map.ToDomain(await result.FirstAsync());
+        return  Map.ToDomain(await result.FirstOrDefaultAsync());
     }
 
     public async Task<bool> ExistAsync(UserAccess entity)

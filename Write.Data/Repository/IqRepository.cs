@@ -36,6 +36,7 @@ public class IqRepository : IIqRepository
     public async Task<Iq?> GetByBuildingNameAsync(string buildingName)
     {
         return await _context.Iqs
+            .Include(c=>c.Locks)
             .FirstOrDefaultAsync(c => string.Equals(buildingName, c.BuildingName));
     }
 }

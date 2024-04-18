@@ -1,3 +1,4 @@
+using ClayLocks.IDP;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -21,17 +22,17 @@ public class Admin : ApiController
    [HttpGet] 
    public async Task<IActionResult> CreateAdmin()
    {
-      var roles = new[]{"admin", "high"};
+      var roles = new[]{Roles.Admin, "high"};
       foreach (var role in roles)
       {
          if(!(await _roleManager.RoleExistsAsync(role)))
          {
-            var entityRole = new IdentityRole("admin");
+            var entityRole = new IdentityRole(role);
             await _roleManager.CreateAsync(entityRole);
          }
       }
       var user = await _userManager.GetUserAsync(User);
-      await _userManager.AddToRoleAsync(user, "admin");
+      await _userManager.AddToRoleAsync(user!, Roles.Admin);
       user = await _userManager.GetUserAsync(User);
       
       return Ok(user);

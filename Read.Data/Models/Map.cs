@@ -32,25 +32,25 @@ public static class Map
         {
             Id = entity.UserId,
             Iqs = entity.Iqs .Select(c=> 
-                    new IqModel 
-                    {
-                        BuildingName = c.BuildingName,
-                        Id = c.Id,
-                        Locks = c.Locks.Select(l=> new LockModel{ Id = l.Id }) .ToList()
-                    }).ToList(),
+                new IqModel 
+                {
+                    Id = c.Id,
+                    Locks = c.Locks.Select(l=> new LockModel{ Id = l.Id }) .ToList()
+                }).ToList(),
         };
     }
-    public static UserAccess ToDomain(UserAccessModel model)
+    public static UserAccess? ToDomain(UserAccessModel? model)
     {
-        return new UserAccess
-        {
-            UserId = model.Id,
-            Iqs = model.Iqs.Select(c=> new Iq
+        return model is not null
+            ? new UserAccess
             {
-                BuildingName = c.BuildingName,
-                Id = c.Id,
-                Locks = c.Locks.Select(l=> new Lock { Id = l.Id }).ToList()
-            }).ToList()
-        };
+                UserId = model.Id,
+                Iqs = model.Iqs.Select(c => new Iq
+                {
+                    Id = c.Id,
+                    Locks = c.Locks.Select(l => new Lock { Id = l.Id }).ToList()
+                }).ToList()
+            }
+            : null;
     }
 }

@@ -17,7 +17,7 @@ public class IqBuildingNamesRepository : IIqBuildingNamesRepository
         await _iqBuildingNamesCollection.InsertOneAsync(Map.ToModel(entity));
     }
 
-    public Task<IqName> GetAsync(Guid id)
+    public Task<IqName?> GetAsync(Guid id)
     {
         throw new NotImplementedException();
     }

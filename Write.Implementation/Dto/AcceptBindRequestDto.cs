@@ -3,9 +3,9 @@ using Write.Implementation.Dto.CustomValidation;
 
 namespace Write.Implementation.Dto;
 
-public class AcceptRequestDto
+public class AcceptBindRequestDto
 {
-    public AcceptRequestDto(string buildingName)
+    public AcceptBindRequestDto(string buildingName)
     {
         BuildingName = buildingName;
     }

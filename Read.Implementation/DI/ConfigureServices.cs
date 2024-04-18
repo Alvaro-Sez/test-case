@@ -17,6 +17,7 @@ public static class ConfigureServices
     public static void AddReadServices(this IServiceCollection service)
     {
         service.AddScoped<IEventHandler<IqCreatedEvent>,IqCreatedEventHandler>();
+        service.AddScoped<IEventHandler<IqAssignedEvent>, IqAssignedEventHandler>();
         service.AddScoped<IQueryHandler<IEnumerable<BindIqRequest>>,GetBindIqRequestsQueryHandler>();
         service.AddScoped<ICommandHandler<CreateBindRequestCommand>,CreateBindRequestCommandHandler>();
         service.AddScoped<IQueryHandler<IEnumerable<string>>,GetIqsQueryHandler>();
