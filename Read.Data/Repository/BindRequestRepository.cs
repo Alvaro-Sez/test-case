@@ -32,7 +32,7 @@ public class BindRequestRepository: IBindRequestRepository
     {
         var emptyFilter = Builders<BindRequestModel>.Filter.Empty;
         var requests = await _collection.FindAsync(emptyFilter);
-        return Map.ToModel(await requests.ToListAsync());
+        return Map.ToDomain(await requests.ToListAsync());
     }
 
     public Task<IEnumerable<BindIqRequest>> GetAllAsyncById(string id)

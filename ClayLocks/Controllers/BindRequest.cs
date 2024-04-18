@@ -43,7 +43,7 @@ public class BindRequest : ApiController
         return ToActionResult(result);
     }
     
-    // [Authorize(Roles="Admin")]
+    [Authorize(Roles="Admin")]
     [HttpGet] 
     public async Task<IActionResult> GetAll()
     {
@@ -51,7 +51,7 @@ public class BindRequest : ApiController
         return ToActionResult(result); 
     }
     
-    // [Authorize(Roles="Admin")]
+    [Authorize(Roles="Admin")]
     [HttpPost] 
     public async Task<IActionResult> Accept(AcceptRequestDto dto)
     {

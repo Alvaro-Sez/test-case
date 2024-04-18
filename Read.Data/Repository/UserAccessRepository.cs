@@ -1,33 +1,34 @@
 using MongoDB.Driver;
 using Read.Contracts.Entities;
 using Read.Contracts.Repository;
+using Read.Data.Models;
 
 namespace Read.Data.Repository;
 
-public class UserAccessRepository : IUserAccessRepository
+internal class UserAccessRepository : IUserAccessRepository
 {
-    private readonly IMongoCollection<UserAccess> _accessCollection;
+    private readonly IMongoCollection<UserAccessModel> _accessCollection;
     public UserAccessRepository(IMongoDatabase db)
     {
-        _accessCollection = db.GetCollection<UserAccess>("user_access");
+        _accessCollection = db.GetCollection<UserAccessModel>("user_access");
     }
-    public Task SetAsync(UserAccess entity)
+    public async Task SetAsync(UserAccess entity)
     {
-        throw new NotImplementedException();
+        await _accessCollection.InsertOneAsync(Map.ToModel(entity));
     }
 
-    public Task<UserAccess> GetAsync(Guid id)
+    public async Task<UserAccess> GetAsync(Guid id)
     {
-        throw new NotImplementedException();
+        var result = await _accessCollection
+            .FindAsync(c=> c.Id == id);
+        return  Map.ToDomain(await result.FirstAsync());
     }
 
-    public Task<UserAccess> GetAsync(string id)
+    public async Task<bool> ExistAsync(UserAccess entity)
     {
-        throw new NotImplementedException();
+        var result = await _accessCollection
+            .FindAsync(c=> c.Id == entity.UserId);
+        return await result.AnyAsync();
     }
 
-    public Task<IEnumerable<UserAccess>> GetAllAsync()
-    {
-        throw new NotImplementedException();
-    }
 }

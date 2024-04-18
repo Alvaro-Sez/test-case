@@ -23,11 +23,11 @@ public class Iq: ApiController
     [Authorize(Roles="Admin")]
     [HttpPost] 
     public async Task<IActionResult> Create(CreateIqDto dto)
-    {
+    {//TODO implement validation of the admin
         var result = await _handler.HandleAsync(new CreateIQCommand(dto.BuildingName));
         return ToActionResult(result);
     }
-    
+    [Authorize]
     [HttpGet] 
     public async Task<IActionResult> GetAll()
     {

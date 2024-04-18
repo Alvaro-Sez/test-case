@@ -37,9 +37,10 @@ public class AcceptBindRequestCommandHandler : ICommandHandler<AcceptBindRequest
         
         await _unitOfWork.SaveChangesAsync();
         
-        await _capPublisher.PublishAsync(nameof(IqAssignedEvent), new IqAssignedEvent(){
+        await _capPublisher.PublishAsync(nameof(IqAssignedEvent), new IqAssignedEvent {
             UserId = user.Id,
-            IqId = requestedIq.Id
+            IqId = requestedIq.Id,
+            LockIds = requestedIq.Locks.Select(c=> c.Id).ToList()
         });
         
         return Result.Success();

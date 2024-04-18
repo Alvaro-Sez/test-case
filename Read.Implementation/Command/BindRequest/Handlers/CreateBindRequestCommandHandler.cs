@@ -18,7 +18,7 @@ public class CreateBindRequestCommandHandler: ICommandHandler<CreateBindRequestC
     }
     public async Task<Result> HandleAsync(CreateBindRequestCommand command)
     {
-        if (!await _iqBuildingNames.ExistAsync(command.BuildingName))
+        if (!await _iqBuildingNames.ExistAsync(new IqName { BuildingName = command.BuildingName }))
         {
             return Result.Failure(Errors.IqDontExist);
         }

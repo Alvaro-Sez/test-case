@@ -26,14 +26,14 @@ public class IqBuildingNamesRepository : IIqBuildingNamesRepository
     {
         var emptyFilter = Builders<IqBuildingNamesModel>.Filter.Empty;
         var iqs = await _iqBuildingNamesCollection.FindAsync(emptyFilter);
-        return Map.ToModel(await iqs.ToListAsync());
+        return Map.ToDomain(await iqs.ToListAsync());
 
     }
 
-    public async Task<bool> ExistAsync(string buildingName)
+    public async Task<bool> ExistAsync(IqName entity)
     {
         var result = await _iqBuildingNamesCollection
-            .FindAsync(c => string.Equals(buildingName, c.Name));
+            .FindAsync(c => string.Equals(entity.BuildingName, c.Name));
         return await result.AnyAsync();
     }
 }
