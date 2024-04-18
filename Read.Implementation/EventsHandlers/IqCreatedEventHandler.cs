@@ -5,7 +5,7 @@ using Read.Contracts.Events;
 using Read.Contracts.Repository;
 using Write.Contacts.Events;
 
-namespace Read.Implementation.Events;
+namespace Read.Implementation.EventsHandlers;
 
 public class IqCreatedEventHandler:  IEventHandler<IqCreatedEvent> ,ICapSubscribe
 {

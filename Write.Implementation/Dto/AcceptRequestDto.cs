@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
-using Write.Contacts.Dto.CustomValidation;
+using Write.Implementation.Dto.CustomValidation;
 
-namespace Write.Contacts.Dto;
+namespace Write.Implementation.Dto;
 
 public class AcceptRequestDto
 {

@@ -25,7 +25,7 @@ public class BindRequestRepository: IBindRequestRepository
     public async Task<bool> ExistAsync(BindIqRequest request)
     {
         var result = await _collection
-            .FindAsync(c =>Equals(request, c.BuildingName) && request.AuthorId == c.IqId);
+            .FindAsync(c =>string.Equals(request.IqBuildingName, c.BuildingName) && request.AuthorId == c.UserRequestingAccessId);
         return await result.AnyAsync();
     }
     public async Task<IEnumerable<BindIqRequest>> GetAllAsync()

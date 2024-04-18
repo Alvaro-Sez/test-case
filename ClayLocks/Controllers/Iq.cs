@@ -3,12 +3,12 @@ using Microsoft.AspNetCore.Mvc;
 using Read.Contracts.Queries;
 using Shared;
 using Write.Contacts.Commands;
-using Write.Contacts.Dto;
 using Write.Implementation.Commands.IQ;
+using Write.Implementation.Dto;
 
 namespace ClayLocks.Controllers;
 
-[Route("iq")]
+[Route("[controller]/[action]")]
 [ApiController]
 public class Iq: ApiController
 {
@@ -21,15 +21,15 @@ public class Iq: ApiController
         _getIqs = getIqs;
     }
     [Authorize(Roles="Admin")]
-    [HttpPost("/create")] 
-    public async Task<IActionResult> CreateIq(CreateIqDto dto)
+    [HttpPost] 
+    public async Task<IActionResult> Create(CreateIqDto dto)
     {
         var result = await _handler.HandleAsync(new CreateIQCommand(dto.BuildingName));
         return ToActionResult(result);
     }
     
     [HttpGet] 
-    public async Task<IActionResult> GetIqs()
+    public async Task<IActionResult> GetAll()
     {
         var iqs = await _getIqs.HandleAsync();
         return ToActionResult(iqs);

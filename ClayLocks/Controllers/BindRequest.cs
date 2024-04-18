@@ -6,8 +6,8 @@ using Read.Contracts.Queries;
 using Read.Implementation.Command.BindRequest;
 using Read.Implementation.Queries.BindRequest;
 using Write.Contacts.Commands;
-using Write.Contacts.Dto;
 using Write.Implementation.Commands.BindRequests;
+using Write.Implementation.Dto;
 
 namespace ClayLocks.Controllers;
 

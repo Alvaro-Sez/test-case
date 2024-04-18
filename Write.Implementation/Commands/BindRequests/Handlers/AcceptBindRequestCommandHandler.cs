@@ -32,6 +32,7 @@ public class AcceptBindRequestCommandHandler : ICommandHandler<AcceptBindRequest
         }
         
         var user = await _userRepository.GetByIdAsync(command.UserToBind) ?? new User(command.UserToBind);
+        
         user.IqAssigned.Add(requestedIq);
         
         await _unitOfWork.SaveChangesAsync();

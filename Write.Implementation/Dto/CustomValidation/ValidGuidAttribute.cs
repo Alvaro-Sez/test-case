@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Write.Contacts.Dto.CustomValidation;
+namespace Write.Implementation.Dto.CustomValidation;
 
 public class ValidGuidAttribute : ValidationAttribute
 {

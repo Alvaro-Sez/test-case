@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ClayLocks.Controllers;
 
-[Route("lock")]
+[Route("[controller]/[action]")]
 [ApiController]
 public class Locks : ApiController
 {

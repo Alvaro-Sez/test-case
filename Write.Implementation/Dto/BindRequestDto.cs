@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Write.Contacts.Dto;
+namespace Write.Implementation.Dto;
 
 public class BindRequestDto(string buildingName)
 {
