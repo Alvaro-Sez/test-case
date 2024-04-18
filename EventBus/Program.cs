@@ -1,17 +1,17 @@
 using EventBus;
+using Read.Data.DI;
 using Read.Implementation.DI;
-using Write.Implementation.DI;
 
 var builder = Host.CreateApplicationBuilder(args);
 
 builder.Services.AddHostedService<Worker>();
-builder.Services.AddWriteServices();
 builder.Services.AddReadServices();
+builder.Services.AddReadDataServices();
 
 builder.Services.AddCap(options =>
 {
     options.UseInMemoryStorage();
-    options.UseRabbitMQ("localhost");
+    options.UseRabbitMQ(Environment.GetEnvironmentVariable("ENV_RABBIT")!);
 });
 
 var host = builder.Build();

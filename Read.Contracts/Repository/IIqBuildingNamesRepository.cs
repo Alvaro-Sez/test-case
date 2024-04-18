@@ -2,9 +2,9 @@ using Read.Contracts.Entities;
 
 namespace Read.Contracts.Repository;
 
-public interface IIqRepository : IRepository<Iq>
+public interface IIqBuildingNamesRepository: IRepository<IqName>
 {
-    Task<IEnumerable<Iq>> GetAllAsync();
+    Task<IEnumerable<IqName>> GetAllAsync();
     
     Task<string> GetByBuildingNameAsync(string buildingName);
 }

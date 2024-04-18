@@ -5,6 +5,10 @@ namespace Read.Data.Repository;
 
 public class BindRequestRepository: IBindRequestRepository
 {
+    public BindRequestRepository()
+    {
+        
+    }
     public Task SetAsync(BindIqRequest entity)
     {
         throw new NotImplementedException();

@@ -2,10 +2,7 @@ namespace Read.Contracts.Entities;
 
 public class Iq
 {
-    public Iq(string buildingName)
-    {
-        BuildingName = buildingName;
-    }
-    public string BuildingName { get; init; }
     public Guid Id { get; set; }
+    public string BuildingName { get; set; } = string.Empty;
+    public List<Lock> Locks { get; set; }
 }

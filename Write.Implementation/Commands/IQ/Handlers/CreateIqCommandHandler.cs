@@ -28,6 +28,7 @@ public class CreateIqCommandHandler: ICommandHandler<CreateIQCommand>
             return Result.Failure(Errors.IqAlreadyExist);
         }
         await _iqRepository.AddAsync(new Iq(command.BuildingName));
+        
         await _unitOfWork.SaveChangesAsync();
         
         await _capPublisher.PublishAsync(nameof(IqCreatedEvent), new IqCreatedEvent(command.BuildingName));

@@ -10,9 +10,9 @@ namespace Read.Implementation.Events;
 public class IqCreatedEventHandler:  IEventHandler<IqCreatedEvent> ,ICapSubscribe
 {
     private readonly ILogger<IqCreatedEventHandler> _logger;
-    private readonly IIqRepository _iqRepository;
+    private readonly IIqBuildingNamesRepository _iqRepository;
 
-    public IqCreatedEventHandler(ILogger<IqCreatedEventHandler> logger, IIqRepository iqRepository)
+    public IqCreatedEventHandler(ILogger<IqCreatedEventHandler> logger, IIqBuildingNamesRepository iqRepository)
     {
         _logger = logger;
         _iqRepository = iqRepository;
@@ -21,7 +21,16 @@ public class IqCreatedEventHandler:  IEventHandler<IqCreatedEvent> ,ICapSubscrib
     [CapSubscribe(nameof(IqCreatedEvent))]
     public async Task Handle(IqCreatedEvent @event)
     {
-        _logger.LogInformation($"Iq Created");
-        // await _iqRepository.SetAsync(new Iq(@event.BuildingName));
+        try
+        {
+            await _iqRepository.SetAsync(new IqName { BuildingName = @event.BuildingName });
+            _logger.LogInformation("Iq Created with name:{BuildingName}",@event.BuildingName);
+        }
+        catch (Exception e)
+        {
+            _logger.LogError("something went wrong: {e} ", e);
+            Console.WriteLine(e);
+            throw;
+        }
     }
 }

@@ -1,3 +1,4 @@
+using MongoDB.Driver;
 using Read.Contracts.Entities;
 using Read.Contracts.Repository;
 
@@ -5,6 +6,11 @@ namespace Read.Data.Repository;
 
 public class UserAccessRepository : IUserAccessRepository
 {
+    private readonly IMongoCollection<UserAccess> _accessCollection;
+    public UserAccessRepository(IMongoDatabase db)
+    {
+        _accessCollection = db.GetCollection<UserAccess>("user_access");
+    }
     public Task SetAsync(UserAccess entity)
     {
         throw new NotImplementedException();

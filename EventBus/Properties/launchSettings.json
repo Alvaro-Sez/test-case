@@ -5,7 +5,9 @@
       "commandName": "Project",
       "dotnetRunMessages": true,
       "environmentVariables": {
-        "DOTNET_ENVIRONMENT": "Development"
+        "DOTNET_ENVIRONMENT": "Development",
+        "ENV_MONGO_URL": "mongodb://localhost:27017",
+        "ENV_RABBIT": "localhost"
       }
     }
   }

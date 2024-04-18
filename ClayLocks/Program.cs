@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using ClayLocks.Configuration;
 using ClayLocks.IDP;
 using Microsoft.AspNetCore.Identity;
@@ -15,10 +14,10 @@ builder.Services.AddControllers();
 
 builder.Services.AddSwaggerConfiguration();
 
+builder.Services.AddIdpProvider();
 builder.Services.AddReadServices();
 builder.Services.AddReadDataServices();
 builder.Services.AddWriteServices();
-builder.Services.AddIdpProvider();
 builder.Services.AddWriteDataServices(builder.Configuration);
 builder.Services.AddCap(options =>
 {

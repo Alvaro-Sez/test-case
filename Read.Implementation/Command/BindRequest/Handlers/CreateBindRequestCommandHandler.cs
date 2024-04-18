@@ -7,17 +7,17 @@ namespace Read.Implementation.Command.BindRequest.Handlers;
 
 public class CreateBindRequestCommandHandler: ICommandHandler<CreateBindRequestCommand>
 {
-    private readonly IIqRepository _iqRepository;
+    private readonly IIqBuildingNamesRepository _iqBuildingNames;
     private readonly IBindRequestRepository _bindRequestRepository;
 
-    public CreateBindRequestCommandHandler(IIqRepository iqRepository, IBindRequestRepository bindRequestRepository)
+    public CreateBindRequestCommandHandler(IIqBuildingNamesRepository iqBuildingNames, IBindRequestRepository bindRequestRepository)
     {
-        _iqRepository = iqRepository;
+        _iqBuildingNames = iqBuildingNames;
         _bindRequestRepository = bindRequestRepository;
     }
     public async Task<Result> HandleAsync(CreateBindRequestCommand command)
     {
-        var requestedIq = await _iqRepository.GetByBuildingNameAsync(command.BuildingName); 
+        var requestedIq = await _iqBuildingNames.GetByBuildingNameAsync(command.BuildingName); 
         
         if (string.IsNullOrEmpty(requestedIq))
         {
