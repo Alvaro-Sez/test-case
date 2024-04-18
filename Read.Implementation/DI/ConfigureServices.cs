@@ -25,7 +25,7 @@ public static class ConfigureServices
         service.AddScoped<IQueryHandler<IEnumerable<BindIqRequest>>,GetBindIqRequestsQueryHandler>();
         service.AddScoped<ICommandHandler<CreateBindRequestCommand>,CreateBindRequestCommandHandler>();
         service.AddScoped<IQueryHandler<GetIqsQuery>,GetIqsQueryHandler>();
-        service.AddScoped<IQueryHandlerT<UserDto,GetAllowedLocksQuery>,GetAllowedLocksQueryHandler>();
-         
+        service.AddScoped<IQueryHandlerT<GetAllowedLocksQuery,UserIdDto>,GetAllowedLocksQueryHandler>();
+        service.AddScoped<IQueryHandlerT<OpenLockQuery, OpenLockDto>,OpenLockQueryHandler>();
     }
 }

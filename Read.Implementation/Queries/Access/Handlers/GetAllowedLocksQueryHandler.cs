@@ -5,7 +5,7 @@ using Shared;
 
 namespace Read.Implementation.Queries.Access.Handlers;
 
-public class GetAllowedLocksQueryHandler : IQueryHandlerT<UserDto,GetAllowedLocksQuery>
+public class GetAllowedLocksQueryHandler : IQueryHandlerT<GetAllowedLocksQuery,UserIdDto>
 {
     private readonly IUserAccessRepository _userAccess;
 
@@ -14,9 +14,9 @@ public class GetAllowedLocksQueryHandler : IQueryHandlerT<UserDto,GetAllowedLock
         _userAccess = userAccess;
     }
     
-    public async Task<Result<GetAllowedLocksQuery>> HandleAsync(UserDto dto)
+    public async Task<Result<GetAllowedLocksQuery>> HandleAsync(UserIdDto idDto)
     {
-        var user = await _userAccess.GetAsync(Guid.Parse(dto.UserId));
+        var user = await _userAccess.GetAsync(idDto.UserId);
         
         if(user is null)
         {

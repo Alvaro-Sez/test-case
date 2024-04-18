@@ -7,8 +7,11 @@ public record UserIdDto
 {
     public UserIdDto(string userId)
     {
-        user
-        UserId = Guid.TryParse(userId);
+        if(!Guid.TryParse(userId, out var id))
+        {
+            throw new ArgumentException("Invalid Id from Idp service");
+        }
+        UserId = id;
     }
     public Guid UserId{ get; init; }
 }

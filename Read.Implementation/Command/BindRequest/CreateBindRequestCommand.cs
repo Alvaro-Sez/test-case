@@ -5,8 +5,12 @@ public class CreateBindRequestCommand
     
     public CreateBindRequestCommand(string buildingName, string userToBind)
     {
+        if(!Guid.TryParse(userToBind, out var id))
+        {
+            throw new ArgumentException("Invalid Id from Idp service");
+        }
         BuildingName = buildingName;
-        UserToBind = Guid.Parse(userToBind); // can be parsed safely ? because comes from the idp, that works with guid TODO
+        UserToBind = id; // can be parsed safely ? because comes from the idp, that works with guid TODO
     }
 
     public string BuildingName { get; set; }

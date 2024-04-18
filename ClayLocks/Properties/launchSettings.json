@@ -19,6 +19,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development",
         "ENV_MONGO_URL": "mongodb://localhost:27017",
         "ENV_SQL_URL": "Server=localhost;Database=FunLocks;User Id=sa;Password=123456Aa?;TrustServerCertificate=True",
+        "ENV_IDP_URL": "Server=localhost;Database=Idp;User Id=sa;Password=123456Aa?;TrustServerCertificate=True",
         "ENV_RABBIT": "localhost"
       }
     },

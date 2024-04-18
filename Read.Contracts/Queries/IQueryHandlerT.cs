@@ -2,7 +2,7 @@ using Shared;
 
 namespace Read.Contracts.Queries;
 
-public interface IQueryHandlerT<in TDto, TQuery>
+public interface IQueryHandlerT<TQuery,in TDto>
 {
     Task<Result<TQuery>> HandleAsync(TDto dto);
 }
