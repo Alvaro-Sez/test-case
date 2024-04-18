@@ -11,7 +11,7 @@ using Write.Implementation.Commands.BindRequests;
 
 namespace ClayLocks.Controllers;
 
-[Route("bind")]
+[Route("[controller]/[action]")]
 [ApiController]
 public class BindRequest : ApiController
 {
@@ -34,8 +34,8 @@ public class BindRequest : ApiController
     }
     
     [Authorize]
-    [HttpPost("/create")] //TODO protected
-    public async Task<IActionResult> CreateBindRequest(BindRequestDto dto)
+    [HttpPost] //TODO protected
+    public async Task<IActionResult> Add(BindRequestDto dto)
     {
         var userIdpId = _userManager.GetUserId(User)!;
         var result = await _createBindRequestHandler
@@ -43,17 +43,17 @@ public class BindRequest : ApiController
         return ToActionResult(result);
     }
     
-    [Authorize(Roles="Admin")]
+    // [Authorize(Roles="Admin")]
     [HttpGet] 
-    public async Task<IActionResult> GetIqBindRequests()
+    public async Task<IActionResult> GetAll()
     {
         var result = await _queryHandler.HandleAsync();
         return ToActionResult(result); 
     }
     
-    [Authorize(Roles="Admin")]
-    [HttpPost("/accept")] 
-    public async Task<IActionResult> AcceptRequest(AcceptRequestDto dto)
+    // [Authorize(Roles="Admin")]
+    [HttpPost] 
+    public async Task<IActionResult> Accept(AcceptRequestDto dto)
     {
         var userIdpId = _userManager.GetUserId(User)!;
         var result = await _acceptBindRequestHandler.HandleAsync(new AcceptBindRequestCommand(dto.BuildingName, dto.UserToBind, userIdpId));

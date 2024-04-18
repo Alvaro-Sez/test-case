@@ -11,7 +11,7 @@ public abstract class ApiController : ControllerBase
    {
       if (!result.IsSuccess)
       {
-         return BadRequest(result.Error.Code);
+         return BadRequest(result.Error); // in prod i should only return the code of the error.
       }
       return Ok();
    }
@@ -20,7 +20,7 @@ public abstract class ApiController : ControllerBase
    {
       if (!result.IsSuccess)
       {
-         return BadRequest(result.Error.Code);
+         return BadRequest(result.Error);// in prod i should only return the code of the error.
       }
       if(result.Value is null)
       {

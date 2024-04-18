@@ -21,7 +21,7 @@ public class Admin : ApiController
    [HttpGet] 
    public async Task<IActionResult> CreateAdmin()
    {
-      var roles = new[]{"admin", "high", "low"};
+      var roles = new[]{"admin", "high"};
       foreach (var role in roles)
       {
          if(!(await _roleManager.RoleExistsAsync(role)))

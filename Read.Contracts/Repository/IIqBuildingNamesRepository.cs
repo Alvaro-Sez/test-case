@@ -6,5 +6,5 @@ public interface IIqBuildingNamesRepository: IRepository<IqName>
 {
     Task<IEnumerable<IqName>> GetAllAsync();
     
-    Task<string> GetByBuildingNameAsync(string buildingName);
+    Task<bool> ExistAsync(string buildingName);
 }

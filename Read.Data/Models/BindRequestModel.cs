@@ -1,5 +1,8 @@
+using MongoDB.Bson.Serialization.Attributes;
+
 namespace Read.Data.Models;
 
+[BsonIgnoreExtraElements]
 public class BindRequestModel
 {
     public Guid IqId { get; set; }

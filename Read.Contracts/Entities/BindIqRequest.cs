@@ -3,7 +3,7 @@ namespace Read.Contracts.Entities;
 public class BindIqRequest
 {
     
-    public BindIqRequest(string authorId, string iqBuildingName)
+    public BindIqRequest(Guid authorId, string iqBuildingName)
     {
         AuthorId = authorId;
         IqBuildingName = iqBuildingName;
@@ -14,6 +14,6 @@ public class BindIqRequest
         
     }
 
-    public string AuthorId { get; set; }
+    public Guid AuthorId { get; set; }
     public string IqBuildingName { get; set; }
 }

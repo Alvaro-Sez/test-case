@@ -6,4 +6,5 @@ public interface IBindRequestRepository: IRepository<BindIqRequest>
 {
     Task<IEnumerable<BindIqRequest>> GetAllAsync();
 
+    Task<bool> ExistAsync(BindIqRequest request);
 }

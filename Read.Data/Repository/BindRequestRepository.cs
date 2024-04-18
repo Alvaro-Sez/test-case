@@ -1,17 +1,20 @@
+using MongoDB.Driver;
 using Read.Contracts.Entities;
 using Read.Contracts.Repository;
+using Read.Data.Models;
 
 namespace Read.Data.Repository;
 
 public class BindRequestRepository: IBindRequestRepository
 {
-    public BindRequestRepository()
+    private readonly IMongoCollection<BindRequestModel> _collection;
+    public BindRequestRepository(IMongoDatabase db)
     {
-        
+        _collection =  db.GetCollection<BindRequestModel>("bind_request");
     }
-    public Task SetAsync(BindIqRequest entity)
+    public async Task SetAsync(BindIqRequest entity)
     {
-        throw new NotImplementedException();
+        await _collection.InsertOneAsync(Map.ToModel(entity));
     }
 
     public Task<BindIqRequest> GetAsync(Guid id)
@@ -19,9 +22,17 @@ public class BindRequestRepository: IBindRequestRepository
         throw new NotImplementedException();
     }
 
-    public Task<IEnumerable<BindIqRequest>> GetAllAsync()
+    public async Task<bool> ExistAsync(BindIqRequest request)
     {
-        throw new NotImplementedException();
+        var result = await _collection
+            .FindAsync(c =>Equals(request, c.BuildingName) && request.AuthorId == c.IqId);
+        return await result.AnyAsync();
+    }
+    public async Task<IEnumerable<BindIqRequest>> GetAllAsync()
+    {
+        var emptyFilter = Builders<BindRequestModel>.Filter.Empty;
+        var requests = await _collection.FindAsync(emptyFilter);
+        return Map.ToModel(await requests.ToListAsync());
     }
 
     public Task<IEnumerable<BindIqRequest>> GetAllAsyncById(string id)

@@ -22,17 +22,18 @@ public class IqBuildingNamesRepository : IIqBuildingNamesRepository
         throw new NotImplementedException();
     }
 
-    public Task<string> GetByBuildingNameAsync(string buildingName)
+    public async Task<IEnumerable<IqName>> GetAllAsync()
     {
-        throw new NotImplementedException();
-    }
-    public Task<IqName> GetAsync(string id)
-    {
-        throw new NotImplementedException();
+        var emptyFilter = Builders<IqBuildingNamesModel>.Filter.Empty;
+        var iqs = await _iqBuildingNamesCollection.FindAsync(emptyFilter);
+        return Map.ToModel(await iqs.ToListAsync());
+
     }
 
-    public Task<IEnumerable<IqName>> GetAllAsync()
+    public async Task<bool> ExistAsync(string buildingName)
     {
-        throw new NotImplementedException();
+        var result = await _iqBuildingNamesCollection
+            .FindAsync(c => string.Equals(buildingName, c.Name));
+        return await result.AnyAsync();
     }
 }

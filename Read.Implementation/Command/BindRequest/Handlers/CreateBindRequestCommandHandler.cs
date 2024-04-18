@@ -1,3 +1,4 @@
+using System.Data;
 using Read.Contracts.Commands;
 using Read.Contracts.Entities;
 using Read.Contracts.Repository;
@@ -17,9 +18,7 @@ public class CreateBindRequestCommandHandler: ICommandHandler<CreateBindRequestC
     }
     public async Task<Result> HandleAsync(CreateBindRequestCommand command)
     {
-        var requestedIq = await _iqBuildingNames.GetByBuildingNameAsync(command.BuildingName); 
-        
-        if (string.IsNullOrEmpty(requestedIq))
+        if (!await _iqBuildingNames.ExistAsync(command.BuildingName))
         {
             return Result.Failure(Errors.IqDontExist);
         }
@@ -27,9 +26,15 @@ public class CreateBindRequestCommandHandler: ICommandHandler<CreateBindRequestC
         var bindRequest = new BindIqRequest()
         {
             AuthorId = command.UserToBind,
-            IqBuildingName = requestedIq
+            IqBuildingName = command.BuildingName 
         };
-
+        
+        if(await _bindRequestRepository.ExistAsync(bindRequest))
+        {
+            return Result.Failure(Errors.RequestAlreadyPlaced);
+        }
+        
+        
         await _bindRequestRepository.SetAsync(bindRequest);
         
         return Result.Success();
