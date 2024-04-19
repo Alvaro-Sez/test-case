@@ -6,9 +6,8 @@ namespace Read.Implementation.Queries.IQ.Handlers;
 
 public class GetIqsQueryHandler : IQueryHandler<GetIqsQuery>
 {
-    private readonly IIqBuildingNamesRepository _iqRepository;
-
-    public GetIqsQueryHandler(IIqBuildingNamesRepository iqRepository)
+    private readonly IIqRepository _iqRepository;
+    public GetIqsQueryHandler(IIqRepository iqRepository)
     {
         _iqRepository = iqRepository;
     }

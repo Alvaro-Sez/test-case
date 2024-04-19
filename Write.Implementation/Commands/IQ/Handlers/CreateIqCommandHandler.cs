@@ -27,11 +27,19 @@ public class CreateIqCommandHandler: ICommandHandler<CreateIQCommand>
         {
             return Result.Failure(Errors.IqAlreadyExist);
         }
-        await _iqRepository.AddAsync(new Iq(command.BuildingName));
+
+        iq = new Iq(command.BuildingName);
+        await _iqRepository.AddAsync(iq);
         
         await _unitOfWork.SaveChangesAsync();
         
-        await _capPublisher.PublishAsync(nameof(IqCreatedEvent), new IqCreatedEvent(command.BuildingName));
+        await _capPublisher.PublishAsync(nameof(IqCreatedEvent), 
+        new IqCreatedEvent
+            {
+                BuildingName = iq.BuildingName,
+                Locks = iq.Locks.Select(c=>c.Id),
+                IqId = iq.Id
+            });
         
         return Result.Success();
     }

@@ -10,12 +10,14 @@ namespace Read.Implementation.Queries.Locks.Handlers;
 public class OpenLockQueryHandler: IQueryHandlerT<OpenLockQuery, OpenLockDto>
 {
     private readonly IUserAccessRepository _userAccess;
+    private readonly IIqRepository _iqRepository;
     private readonly IEventRepository _eventRepository;
 
-    public OpenLockQueryHandler(IUserAccessRepository userAccess, IEventRepository eventRepository)
+    public OpenLockQueryHandler(IUserAccessRepository userAccess, IEventRepository eventRepository, IIqRepository iqRepository)
     {
         _userAccess = userAccess;
         _eventRepository = eventRepository;
+        _iqRepository = iqRepository;
     }
 
     public async Task<Result<OpenLockQuery>> HandleAsync(OpenLockDto openLockDto)
@@ -27,7 +29,7 @@ public class OpenLockQueryHandler: IQueryHandlerT<OpenLockQuery, OpenLockDto>
             return Result<OpenLockQuery>.Failure(Errors.IqNotAssigned);
         }
         
-        var isAllowed = IsAllowed(user, Guid.Parse(openLockDto.LockId));
+        var isAllowed = await IsAllowed(user, Guid.Parse(openLockDto.LockId));
         
         try
         {
@@ -41,9 +43,11 @@ public class OpenLockQueryHandler: IQueryHandlerT<OpenLockQuery, OpenLockDto>
         return Result<OpenLockQuery>.From(new OpenLockQuery { Unlock = isAllowed });
         
     }
-    private bool IsAllowed(UserAccess user, Guid lockId)
+    private async Task<bool> IsAllowed(UserAccess user, Guid lockId)
     {
-        return user.Iqs.SelectMany(c => c.Locks.Select(l => l.Id)).Any(c => c == lockId);
+        var userIqs = await _iqRepository.GetAllByIdAsync(user.Iqs);
+        var @lock = userIqs.SelectMany(c => c.Locks).FirstOrDefault(c=>c.Id == lockId);
+        return @lock is not null && user.Access == @lock.Access;
     }
     private EventRecord EventFrom(Guid userId, string lockId, bool access)
     {

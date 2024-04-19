@@ -10,7 +10,7 @@ public static class ConfigureServices
     public static void AddReadDataServices(this IServiceCollection service)
     {
         service.AddScoped<IUserAccessRepository, UserAccessRepository>();
-        service.AddScoped<IIqBuildingNamesRepository,IqBuildingNamesRepository>();
+        service.AddScoped<IIqRepository,IqRepository>();
         service.AddScoped<IBindRequestRepository,BindRequestRepository>();
         service.AddScoped<IEventRepository,EventRepository>();
          

@@ -9,8 +9,10 @@ namespace Read.Data.Repository;
 internal class UserAccessRepository : IUserAccessRepository
 {
     private readonly IMongoCollection<UserAccessModel> _accessCollection;
+    private readonly IMongoCollection<IqModel> _iqCollection;
     public UserAccessRepository(IMongoDatabase db)
     {
+        _iqCollection =db.GetCollection<IqModel>("user_access");
         _accessCollection = db.GetCollection<UserAccessModel>("user_access");
     }
     public async Task SetAsync(UserAccess entity)

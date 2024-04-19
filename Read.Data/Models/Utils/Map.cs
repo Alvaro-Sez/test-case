@@ -1,4 +1,3 @@
-using System.Collections;
 using Read.Contracts.Entities;
 using Read.Contracts.Events;
 
@@ -6,13 +5,32 @@ namespace Read.Data.Models.Utils;
 
 public static class Map
 {
-    public static IqBuildingNamesModel ToModel(IqName entity)
+    public static IqModel ToModel(Iq entity)
     {
-        return new IqBuildingNamesModel { Name = entity.BuildingName };
+        return new IqModel
+        {
+            BuildingName = entity.BuildingName,
+            Id = entity.Id,
+            Locks = entity.Locks.Select(c=>new LockModel
+            {
+                Access = c.Access,
+                Id = c.Id
+            }).ToList()
+        };
     }
-    public static IEnumerable<IqName> ToDomain(IEnumerable<IqBuildingNamesModel> models)
+
+    public static IEnumerable<Iq> ToDomain(IEnumerable<IqModel> models)
     {
-        return models.Select(c => new IqName { BuildingName = c.Name});
+        return models.Select(c=> new Iq
+        {
+            Id = c.Id,
+            Locks = c.Locks.Select(l=>new Lock
+            {
+                Id = l.Id,
+                Access = l.Access
+            }).ToList(),
+            BuildingName = c.BuildingName
+        });
     }
     public static IEnumerable<BindIqRequest> ToDomain(IEnumerable<BindRequestModel> models)
     {
@@ -33,12 +51,8 @@ public static class Map
         return new UserAccessModel
         {
             Id = entity.UserId,
-            Iqs = entity.Iqs .Select(c=> 
-                new IqModel 
-                {
-                    Id = c.Id,
-                    Locks = c.Locks.Select(l=> new LockModel{ Id = l.Id }) .ToList()
-                }).ToList(),
+            Iqs = entity.Iqs,
+            Access = entity.Access
         };
     }
     public static UserAccess? ToDomain(UserAccessModel? model)
@@ -47,11 +61,7 @@ public static class Map
             ? new UserAccess
             {
                 UserId = model.Id,
-                Iqs = model.Iqs.Select(c => new Iq
-                {
-                    Id = c.Id,
-                    Locks = c.Locks.Select(l => new Lock { Id = l.Id }).ToList()
-                }).ToList()
+                Iqs = model.Iqs
             }
             : null;
     }
