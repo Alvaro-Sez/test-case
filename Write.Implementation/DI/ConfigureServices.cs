@@ -4,6 +4,8 @@ using Write.Implementation.Commands.BindRequests;
 using Write.Implementation.Commands.BindRequests.Handlers;
 using Write.Implementation.Commands.IQ;
 using Write.Implementation.Commands.IQ.Handlers;
+using Write.Implementation.Commands.Locks;
+using Write.Implementation.Commands.Locks.Handlers;
 
 namespace Write.Implementation.DI;
 
@@ -13,5 +15,6 @@ public static class ConfigureServices
     {
         service.AddScoped<ICommandHandler<CreateIQCommand>, CreateIqCommandHandler>();
         service.AddScoped<ICommandHandler<AcceptBindRequestCommand>,AcceptBindRequestCommandHandler>();
+        service.AddScoped<ICommandHandler<UpgradeSecurityCommand>,UpgradeSecurityCommandHandler>();
     }
 }

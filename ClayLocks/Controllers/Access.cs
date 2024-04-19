@@ -12,13 +12,14 @@ public class Access : ApiController
     {
         throw new NotImplementedException();
     }
+    
     // [HttpPost] 
     // public Task<IActionResult> RequestHigherPermission()
     // {
     //     throw new NotImplementedException();
     // }
     // [HttpPost] 
-    // public Task<IActionResult> GetPermissionRequests()
+    // public Task<IActionResult> GetAll()
     // {
     //     throw new NotImplementedException();
     // }

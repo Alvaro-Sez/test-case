@@ -9,9 +9,7 @@ using Write.Implementation.DI;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.WebHost.AddClientCert();//could not implement in docker
-
 builder.Services.AddControllers();
-
 builder.Services.AddSwaggerConfiguration();
 
 builder.Services.AddIdpProvider();

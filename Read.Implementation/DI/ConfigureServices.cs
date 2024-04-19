@@ -7,11 +7,13 @@ using Read.Implementation.Command.BindRequest;
 using Read.Implementation.Command.BindRequest.Handlers;
 using Read.Implementation.Dto;
 using Read.Implementation.EventsHandlers;
-using Read.Implementation.Queries.Access;
-using Read.Implementation.Queries.Access.Handlers;
 using Read.Implementation.Queries.BindRequest.Handlers;
+using Read.Implementation.Queries.Events;
+using Read.Implementation.Queries.Events.Handlers;
 using Read.Implementation.Queries.IQ;
 using Read.Implementation.Queries.IQ.Handlers;
+using Read.Implementation.Queries.Locks;
+using Read.Implementation.Queries.Locks.Handlers;
 using Write.Contacts.Events;
 
 namespace Read.Implementation.DI;
@@ -27,5 +29,6 @@ public static class ConfigureServices
         service.AddScoped<IQueryHandler<GetIqsQuery>,GetIqsQueryHandler>();
         service.AddScoped<IQueryHandlerT<GetAllowedLocksQuery,UserIdDto>,GetAllowedLocksQueryHandler>();
         service.AddScoped<IQueryHandlerT<OpenLockQuery, OpenLockDto>,OpenLockQueryHandler>();
+        service.AddScoped<IQueryHandlerT<GetEventsQuery, GetEventsDto>, GetEventsQueryHandler>();
     }
 }

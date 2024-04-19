@@ -1,6 +1,8 @@
+using System.Collections;
 using Read.Contracts.Entities;
+using Read.Contracts.Events;
 
-namespace Read.Data.Models;
+namespace Read.Data.Models.Utils;
 
 public static class Map
 {
@@ -52,5 +54,27 @@ public static class Map
                 }).ToList()
             }
             : null;
+    }
+    public static EventModel ToModel(EventRecord entity)
+    {
+        return new EventModel
+        {
+            UserId = entity.UserId,
+            Type = entity.Type,
+            IssuedAt = entity.IssuedAt,
+            LockId = entity.LockId
+        };
+    }
+    public static IEnumerable<EventRecord> ToDomain(IEnumerable<EventModel?> models)
+    {
+        return models.Any()
+            ? models.Select(c => new EventRecord
+            {
+                UserId = c.UserId,
+                Type = c.Type,
+                IssuedAt = c.IssuedAt,
+                LockId = c.LockId
+            })
+            : Enumerable.Empty<EventRecord>();
     }
 }

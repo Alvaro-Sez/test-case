@@ -3,7 +3,7 @@ using Read.Contracts.Repository;
 using Read.Implementation.Dto;
 using Shared;
 
-namespace Read.Implementation.Queries.Access.Handlers;
+namespace Read.Implementation.Queries.Locks.Handlers;
 
 public class GetAllowedLocksQueryHandler : IQueryHandlerT<GetAllowedLocksQuery,UserIdDto>
 {
@@ -27,7 +27,7 @@ public class GetAllowedLocksQueryHandler : IQueryHandlerT<GetAllowedLocksQuery,U
             new GetAllowedLocksQuery
             {
                 Locks = user.Iqs
-                    .SelectMany(c=>c.Locks.Select(l=>l.Id))
+                    .SelectMany(c=>c.Locks.Select(l=>new AllowedLocksDto{ Id = l.Id , AccessLevel = l.Access}))
             });
     }
 }

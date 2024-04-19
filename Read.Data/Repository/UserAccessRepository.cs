@@ -2,6 +2,7 @@ using MongoDB.Driver;
 using Read.Contracts.Entities;
 using Read.Contracts.Repository;
 using Read.Data.Models;
+using Read.Data.Models.Utils;
 
 namespace Read.Data.Repository;
 

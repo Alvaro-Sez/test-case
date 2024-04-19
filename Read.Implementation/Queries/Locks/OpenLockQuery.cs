@@ -1,4 +1,4 @@
-namespace Read.Implementation.Queries.Access;
+namespace Read.Implementation.Queries.Locks;
 
 public class OpenLockQuery
 {

@@ -12,7 +12,8 @@ public static class ConfigureServices
         service.AddScoped<IUserAccessRepository, UserAccessRepository>();
         service.AddScoped<IIqBuildingNamesRepository,IqBuildingNamesRepository>();
         service.AddScoped<IBindRequestRepository,BindRequestRepository>();
-        
+        service.AddScoped<IEventRepository,EventRepository>();
+         
         service.AddSingleton<IMongoDatabase>(c=> 
             new MongoClient(Environment.GetEnvironmentVariable("ENV_MONGO_URL"))
                 .GetDatabase("Locks")
