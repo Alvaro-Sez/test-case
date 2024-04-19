@@ -18,8 +18,11 @@ public class IncreasedLockSecurityEventHandler : IEventHandler<IncreasedLockSecu
     public async Task Handle(IncreasedLockSecurityEvent @event)
     {
         var iq = await _iqRepository.GetAsync(@event.IqId);
-        var @lock = iq!.Locks.First(c => c.Id == @event.LockId);
-        @lock.Access = AccessLevel.High;
-        await _iqRepository.SetAsync(iq);
+        if(iq is not null)
+        {
+            var @lock = iq.Locks.First(c => c.Id == @event.LockId);
+            @lock.Access = AccessLevel.High;
+            await _iqRepository.SetAsync(iq);
+        }
     }
 }

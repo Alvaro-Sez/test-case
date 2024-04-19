@@ -10,7 +10,7 @@ public static class Map
         return new IqModel
         {
             BuildingName = entity.BuildingName,
-            IqId = entity.Id,
+            Id = entity.Id,
             Locks = entity.Locks.Select(c=>new LockModel
             {
                 Access = c.Access,
@@ -23,7 +23,7 @@ public static class Map
         return iqModel is not null
             ? new Iq
             {
-                Id = iqModel.IqId,
+                Id = iqModel.Id,
                 BuildingName = iqModel.BuildingName,
                 Locks = iqModel.Locks.Select(c => new Lock
                 {
@@ -37,7 +37,7 @@ public static class Map
     {
         return models.Select(c=> new Iq
         {
-            Id = c.IqId,
+            Id = c.Id,
             Locks = c.Locks.Select(l=>new Lock
             {
                 Id = l.Id,
@@ -83,7 +83,8 @@ public static class Map
             ? new UserAccess
             {
                 UserId = model.Id,
-                Iqs = model.Iqs
+                Iqs = model.Iqs,
+                Access = model.Access
             }
             : null;
     }

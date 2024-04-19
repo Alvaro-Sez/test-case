@@ -23,7 +23,7 @@ public class IqRepository: IIqRepository
 
     public async Task<Iq?> GetAsync(Guid id)
     {
-        var iqModel = await _collection.FindAsync(c => c.IqId == id);
+        var iqModel = await _collection.FindAsync(c => c.Id == id);
         return Map.ToDomain(await iqModel.FirstOrDefaultAsync());
     }
 
@@ -56,7 +56,7 @@ public class IqRepository: IIqRepository
         var iqList = new List<Iq>();
         foreach (var iq in ids)
         {
-            var iqs = await _collection.FindAsync(c => c.IqId == iq);
+            var iqs = await _collection.FindAsync(c => c.Id == iq);
             var iqModelList = await iqs.ToListAsync();
             iqList.AddRange(Map.ToDomain(iqModelList));
         }
