@@ -10,7 +10,7 @@ public static class Map
         return new IqModel
         {
             BuildingName = entity.BuildingName,
-            Id = entity.Id,
+            IqId = entity.Id,
             Locks = entity.Locks.Select(c=>new LockModel
             {
                 Access = c.Access,
@@ -18,12 +18,26 @@ public static class Map
             }).ToList()
         };
     }
-
+    public static Iq? ToDomain(IqModel? iqModel)
+    {
+        return iqModel is not null
+            ? new Iq
+            {
+                Id = iqModel.IqId,
+                BuildingName = iqModel.BuildingName,
+                Locks = iqModel.Locks.Select(c => new Lock
+                {
+                    Id = c.Id,
+                    Access = c.Access
+                }).ToList()
+            }
+            : null;
+    }
     public static IEnumerable<Iq> ToDomain(IEnumerable<IqModel> models)
     {
         return models.Select(c=> new Iq
         {
-            Id = c.Id,
+            Id = c.IqId,
             Locks = c.Locks.Select(l=>new Lock
             {
                 Id = l.Id,

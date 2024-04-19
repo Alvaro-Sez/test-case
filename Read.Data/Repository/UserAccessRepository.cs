@@ -9,15 +9,15 @@ namespace Read.Data.Repository;
 internal class UserAccessRepository : IUserAccessRepository
 {
     private readonly IMongoCollection<UserAccessModel> _accessCollection;
-    private readonly IMongoCollection<IqModel> _iqCollection;
     public UserAccessRepository(IMongoDatabase db)
     {
-        _iqCollection =db.GetCollection<IqModel>("user_access");
         _accessCollection = db.GetCollection<UserAccessModel>("user_access");
     }
     public async Task SetAsync(UserAccess entity)
     {
-        await _accessCollection.InsertOneAsync(Map.ToModel(entity));
+        var model = Map.ToModel(entity);
+        var update = Builders<UserAccessModel>.Filter.Eq("Id", model.Id);
+        await _accessCollection.ReplaceOneAsync(update, model, new ReplaceOptions(){IsUpsert = true});
     }
 
     public async Task<UserAccess?> GetAsync(Guid id)
@@ -33,5 +33,4 @@ internal class UserAccessRepository : IUserAccessRepository
             .FindAsync(c=> c.Id == entity.UserId);
         return await result.AnyAsync();
     }
-
 }

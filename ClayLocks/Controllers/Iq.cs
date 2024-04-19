@@ -1,3 +1,4 @@
+using ClayLocks.IDP;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Read.Contracts.Queries;
@@ -20,7 +21,7 @@ public class Iq: ApiController
         _handler = handler;
         _getIqs = getIqs;
     }
-    [Authorize(Roles="Admin")]
+    [Authorize(Roles=Roles.Admin)]
     [HttpPost] 
     public async Task<IActionResult> Create(CreateIqDto dto)
     {//TODO implement validation of the admin

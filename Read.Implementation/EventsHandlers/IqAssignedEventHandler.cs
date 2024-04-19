@@ -24,26 +24,19 @@ public class IqAssignedEventHandler: IEventHandler<IqAssignedEvent> , ICapSubscr
 
     [CapSubscribe(nameof(IqAssignedEvent))]
     public async Task Handle(IqAssignedEvent @event)
-    { 
+    {
         var user = await _userAccess.GetAsync(@event.UserId) ?? new UserAccess { UserId = @event.UserId };
-        var iq = await _iqRepository.GetAsync(@event.IqId) ?? CreateIqFromEvent(@event);
+        var iq = await _iqRepository.GetAsync(@event.IqId);
+        
+        if(iq is null)
+        {
+            throw new ApplicationException("Invalid state of data");
+        }
         
         user.Iqs.Add(@event.IqId);
-        
+        user.Iqs = user.Iqs.Distinct().ToList();
         await _userAccess.SetAsync(user);
-        await _iqRepository.SetAsync(iq);
+        
         await _bindRequest.DeleteAsync(new BindIqRequest(@event.UserId, @event.BuildingName));
-    }
-    private static Iq CreateIqFromEvent(IqAssignedEvent @event)
-    {
-        return new Iq {
-            Id = @event.IqId, 
-            BuildingName = @event.BuildingName, 
-            Locks = @event.LockIds
-                .Select(c=> new Lock 
-                { 
-                    Id = c, 
-                    Access = AccessLevel.Low
-                }).ToList()};
     }
 }

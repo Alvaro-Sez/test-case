@@ -16,12 +16,15 @@ public class IqRepository: IIqRepository
     }
     public async Task SetAsync(Iq entity)
     {
-        await _collection.InsertOneAsync(Map.ToModel(entity));
+        var model = Map.ToModel(entity);
+        var update = Builders<IqModel>.Filter.Eq("Id",entity.Id);
+        await _collection.ReplaceOneAsync(update, model, new ReplaceOptions(){IsUpsert = true});
     }
 
-    public Task<Iq?> GetAsync(Guid id)
+    public async Task<Iq?> GetAsync(Guid id)
     {
-        throw new NotImplementedException();
+        var iqModel = await _collection.FindAsync(c => c.IqId == id);
+        return Map.ToDomain(await iqModel.FirstOrDefaultAsync());
     }
 
     public Task<bool> ExistAsync(Iq entity)
@@ -46,7 +49,7 @@ public class IqRepository: IIqRepository
         var iqList = new List<Iq>();
         foreach (var iq in ids)
         {
-            var iqs = await _collection.FindAsync(c => c.Id == iq);
+            var iqs = await _collection.FindAsync(c => c.IqId == iq);
             var iqModelList = await iqs.ToListAsync();
             iqList.AddRange(Map.ToDomain(iqModelList));
         }
