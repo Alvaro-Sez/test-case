@@ -101,4 +101,14 @@ public static class Map
             })
             : Enumerable.Empty<EventRecord>();
     }
+
+    public static AccessRequestModel ToModel(AccessLevelRequest entity)
+    {
+        return new AccessRequestModel() { UserId = entity.UserId , IqId = entity.IqId};
+    }
+    
+    public static IEnumerable<AccessLevelRequest> ToDomain(IEnumerable<AccessRequestModel> models)
+    {
+        return models.Select(c => new AccessLevelRequest() { UserId = c.UserId , IqId = c.IqId});
+    }
 }

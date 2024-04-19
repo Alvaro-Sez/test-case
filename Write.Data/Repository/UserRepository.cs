@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using Write.Contacts.Entities;
 using Write.Contacts.Repository;
 using Write.Data.EF;
@@ -15,7 +16,7 @@ public class UserRepository : IUserRepository
 
     public async Task<User?> GetByIdAsync(Guid id)
     {
-        return await _dbContext.Users.FindAsync(id);
+        return await _dbContext.Users.Include(c=>c.IqAssigned).FirstOrDefaultAsync(c=>c.Id==id);
     }
 
     public Task AddAsync(User entity)

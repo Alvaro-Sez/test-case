@@ -13,6 +13,7 @@ public static class ConfigureServices
         service.AddScoped<IIqRepository,IqRepository>();
         service.AddScoped<IBindRequestRepository,BindRequestRepository>();
         service.AddScoped<IEventRepository,EventRepository>();
+        service.AddScoped<IAccessRequestRepository,AccessRequestRepository>();
          
         service.AddSingleton<IMongoDatabase>(c=> 
             new MongoClient(Environment.GetEnvironmentVariable("ENV_MONGO_URL"))

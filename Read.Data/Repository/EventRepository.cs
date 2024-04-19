@@ -14,11 +14,6 @@ public class EventRepository : IEventRepository
     {
         _collection = db.GetCollection<EventModel>("events");
     }
-    public async Task<IEnumerable<EventRecord>> GetByLockId(Guid id)
-    {
-        var events = await _collection.FindAsync(c=> c.LockId == id);
-        return Map.ToDomain(await events.ToListAsync());
-    }
 
     public async Task<IEnumerable<EventRecord>> GetByUserId(Guid id)
     {
