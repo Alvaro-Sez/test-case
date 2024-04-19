@@ -36,12 +36,14 @@ public class Locks : ApiController
         _securityUpgradeHandler = securityUpgradeHandler;
     }
     
+    [Authorize] 
     [HttpPost] 
     public async Task<IActionResult> OpenLock(OpenLockDto dto)
     {
         return ToActionResult(await _unlock.HandleAsync(dto));
     }
     
+    [Authorize] 
     [HttpGet] 
     public async Task<IActionResult> GetAll()
     {

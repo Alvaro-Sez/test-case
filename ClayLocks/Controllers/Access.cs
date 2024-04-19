@@ -12,6 +12,7 @@ using Write.Implementation.Commands.Access;
 namespace ClayLocks.Controllers;
 
 [Route("[controller]/[action]")]
+[Authorize]
 [ApiController]
 public class Access : ApiController
 {
@@ -27,7 +28,6 @@ public class Access : ApiController
         _acceptHigher = acceptHigher;
     }
 
-    [Authorize]
     [HttpPost] 
     public async Task<IActionResult> CreateRequest(HigherAccessDto dto)
     {
