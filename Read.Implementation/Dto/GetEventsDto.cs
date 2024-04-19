@@ -5,7 +5,5 @@ namespace Read.Implementation.Dto;
 
 public class GetEventsDto
 {
-    [ValidGuid]
-    [Required]
     public string UserId { get; set; } = string.Empty;
 }

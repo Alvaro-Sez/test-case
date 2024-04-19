@@ -57,8 +57,7 @@ public class BindRequest : ApiController
     //Cancelation TOkens TODO
     public async Task<IActionResult> Accept(AcceptBindRequestDto dto, CancellationToken cancellationToken)
     {
-        var userIdpId = _userManager.GetUserId(User)!;
-        var result = await _acceptBindRequestHandler.HandleAsync(new AcceptBindRequestCommand(dto.BuildingName, dto.UserToBind, userIdpId));
+        var result = await _acceptBindRequestHandler.HandleAsync(new AcceptBindRequestCommand(dto.BuildingName, dto.UserToBind));
         return ToActionResult(result);
     }
 }

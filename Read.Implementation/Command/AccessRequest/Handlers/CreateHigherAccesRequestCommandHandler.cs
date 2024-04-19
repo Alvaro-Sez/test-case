@@ -22,6 +22,13 @@ public class CreateHigherAccesRequestCommandHandler: ICommandHandler<CreateHighe
         {
             return Result.Failure(Errors.IqNotAssigned);
         }
+
+        var userRequesting = await _userAccessRepository.GetAsync(command.UserId);
+        
+        if(!userRequesting?.Iqs.Contains(command.IqId) ?? true)
+        {
+            return Result.Failure(Errors.UserNotAssignedToThisIq);
+        }
         
         var bindRequest = new AccessLevelRequest(){UserId = command.UserId, IqId = command.IqId};
         

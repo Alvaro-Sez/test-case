@@ -26,7 +26,8 @@ public class CreateBindRequestCommandHandler: ICommandHandler<CreateBindRequestC
         var bindRequest = new BindIqRequest()
         {
             AuthorId = command.UserToBind,
-            IqBuildingName = command.BuildingName 
+            IqBuildingName = command.BuildingName,
+            Id = Guid.NewGuid()
         };
         
         if(await _bindRequestRepository.ExistAsync(bindRequest))

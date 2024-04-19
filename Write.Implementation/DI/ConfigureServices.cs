@@ -1,5 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Write.Contacts.Commands;
+using Write.Implementation.Commands.Access;
+using Write.Implementation.Commands.Access.Handlers;
 using Write.Implementation.Commands.BindRequests;
 using Write.Implementation.Commands.BindRequests.Handlers;
 using Write.Implementation.Commands.IQ;
@@ -16,5 +18,7 @@ public static class ConfigureServices
         service.AddScoped<ICommandHandler<CreateIQCommand>, CreateIqCommandHandler>();
         service.AddScoped<ICommandHandler<AcceptBindRequestCommand>,AcceptBindRequestCommandHandler>();
         service.AddScoped<ICommandHandler<UpgradeSecurityCommand>,UpgradeSecurityCommandHandler>();
+        service.AddScoped<ICommandHandler<AcceptHigherAccessCommand>,AcceptHigherAccessCommandHandler>();
+        
     }
 }

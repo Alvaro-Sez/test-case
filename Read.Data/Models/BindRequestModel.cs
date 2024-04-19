@@ -2,9 +2,10 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace Read.Data.Models;
 
-[BsonIgnoreExtraElements]
 public class BindRequestModel
 {
+    [BsonId]
+    public Guid Id { get; set; }
     public Guid UserRequestingAccessId { get; set; }
     public string BuildingName { get; set; } = string.Empty;
 }

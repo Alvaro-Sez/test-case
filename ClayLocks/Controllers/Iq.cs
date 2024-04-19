@@ -14,9 +14,9 @@ namespace ClayLocks.Controllers;
 public class Iq: ApiController
 {
     private readonly ICommandHandler<CreateIQCommand> _handler;
-    private readonly IQueryHandler<GetIqsQuery> _getIqs;
+    private readonly IQueryHandler<IEnumerable<GetIqsQuery>> _getIqs;
 
-    public Iq(ICommandHandler<CreateIQCommand> handler, IQueryHandler<GetIqsQuery> getIqs)
+    public Iq(ICommandHandler<CreateIQCommand> handler, IQueryHandler<IEnumerable<GetIqsQuery>> getIqs)
     {
         _handler = handler;
         _getIqs = getIqs;

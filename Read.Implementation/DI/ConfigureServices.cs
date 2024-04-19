@@ -34,7 +34,7 @@ public static class ConfigureServices
          
         
         service.AddScoped<IQueryHandler<GetBindIqRequestsQuery>,GetBindIqRequestsQueryHandler>();
-        service.AddScoped<IQueryHandler<GetIqsQuery>,GetIqsQueryHandler>();
+        service.AddScoped<IQueryHandler<IEnumerable<GetIqsQuery>>,GetIqsQueryHandler>();
         service.AddScoped<IQueryHandlerT<GetAllowedLocksQuery,UserIdDto>,GetAllowedLocksQueryHandler>();
         service.AddScoped<IQueryHandlerT<OpenLockQuery, OpenLockDto>,OpenLockQueryHandler>();
         service.AddScoped<IQueryHandlerT<GetEventsQuery, GetEventsDto>, GetEventsQueryHandler>();

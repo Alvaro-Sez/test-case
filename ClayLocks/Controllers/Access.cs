@@ -1,3 +1,5 @@
+using System.Security.Claims;
+using ClayLocks.IDP;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -8,6 +10,7 @@ using Read.Implementation.Dto;
 using Read.Implementation.Queries.AccessRequest;
 using Shared;
 using Write.Implementation.Commands.Access;
+using Write.Implementation.Dto;
 
 namespace ClayLocks.Controllers;
 
@@ -29,23 +32,43 @@ public class Access : ApiController
     }
 
     [HttpPost] 
-    public async Task<IActionResult> CreateRequest(HigherAccessDto dto)
+    public async Task<IActionResult> CreateUpgradeRequest(HigherAccessDto dto)
     {
         var userIdpId = _userManager.GetUserId(User)!;
         var result = await _accessHandler.HandleAsync(new CreateHigherAccessRequestCommand(userIdpId, dto.IqId));
         return ToActionResult(result);
     }
     
-    [HttpPost] 
-    public async Task<IActionResult> GetRequests(GetAccessRequestDto dto)
+    [HttpGet] 
+    public async Task<IActionResult> GetRequests()
     {
-        return ToActionResult(await _accessRequestQueryHandler.HandleAsync(dto));
+        var query = new GetAccessRequestDto()
+        {
+            UserId = _userManager.GetUserId(User)!,
+            IsAdmin =  IsAdmin(User)
+        };
+        return ToActionResult(await _accessRequestQueryHandler.HandleAsync(query));
     }
     [HttpPost] 
-    public async Task<IActionResult> AcceptRequest()
+    public async Task<IActionResult> AcceptRequest(AcceptHigherAccessDto dto)
     {
-        var userIdpId = _userManager.GetUserId(User)!;
-        var result = await _acceptHigher.HandleAsync(new AcceptHigherAccessCommand{UserRequestingId =Guid.Parse(userIdpId)});
+        var command = new AcceptHigherAccessCommand()
+        {
+            UserAcceptingId = Guid.Parse(_userManager.GetUserId(User)!),
+            IsAdmin =  IsAdmin(User),
+            UserRequestingId = Guid.Parse(dto.UserId)
+
+        };
+        var result = await _acceptHigher.HandleAsync(command);
         return ToActionResult(result);
     }
+    private static bool IsAdmin(ClaimsPrincipal user)
+    {
+        var userIdentity = (ClaimsIdentity)user.Identity!;
+        var claims = userIdentity.Claims;
+        var roleClaimType = userIdentity.RoleClaimType;
+        var claimRoles = claims.Where(c => c.Type == ClaimTypes.Role).ToList();
+        var roles =claimRoles.Select(c => c.Value);
+        return roles.Contains(Roles.Admin);
+    } 
 }

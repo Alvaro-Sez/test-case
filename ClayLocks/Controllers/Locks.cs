@@ -40,6 +40,8 @@ public class Locks : ApiController
     [HttpPost] 
     public async Task<IActionResult> OpenLock(OpenLockDto dto)
     {
+        // for testing purpose Im passing the userid in the body of the request
+        // normally we would user the JWT to retrieve the user id from the IDP
         return ToActionResult(await _unlock.HandleAsync(dto));
     }
     
@@ -52,10 +54,10 @@ public class Locks : ApiController
     }
     
     [Authorize(Roles = Roles.Admin)]
-    [HttpPost] 
-    public async Task<IActionResult> GetEvents(GetEventsDto dto)
+    [HttpGet("{userId}")] 
+    public async Task<IActionResult> GetEvents(string userId)
     {
-        return ToActionResult(await _events.HandleAsync(dto));
+        return ToActionResult(await _events.HandleAsync(new GetEventsDto(){UserId = userId}));
     }
     
     [Authorize]

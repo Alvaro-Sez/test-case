@@ -1,6 +1,7 @@
 using DotNetCore.CAP;
 using Shared;
 using Write.Contacts.Commands;
+using Write.Contacts.Entities;
 using Write.Contacts.Events;
 using Write.Contacts.Repository;
 
@@ -20,14 +21,31 @@ public class AcceptHigherAccessCommandHandler : ICommandHandler<AcceptHigherAcce
 
     public async Task<Result> HandleAsync(AcceptHigherAccessCommand command)
     {
-        var user = await _userRepository.GetByIdAsync(command.UserRequestingId);
-        if(user is null)
+        var userRequesting = await _userRepository.GetByIdAsync(command.UserRequestingId);
+        var userAccepting = await _userRepository.GetByIdAsync(command.UserAcceptingId);
+        if(userRequesting is null || userAccepting is null)
         {
             return Result.Failure(Errors.IqNotAssigned);
         }
-        user.AccessLevel = Contacts.Entities.Access.High;
+        
+        if(!IsAllowedToAccept(userAccepting, userRequesting))
+        {
+            return Result.Failure(Errors.NoLevelAccess);
+        }
+        
+        userRequesting.AccessLevel = Contacts.Entities.Access.High;
         await _unitOfWork.SaveChangesAsync();
-        await _publisher.PublishAsync(nameof(PermissionUpgradedEvent), new PermissionUpgradedEvent(){UserId = user.Id});
+        await _publisher.PublishAsync(nameof(PermissionUpgradedEvent), new PermissionUpgradedEvent(){UserId =userRequesting.Id});
         return Result.Success();//TODO notify read
+    }
+    private bool IsAllowedToAccept(User userAccepting, User userRequesting)
+    {
+        if(userAccepting.AccessLevel is Contacts.Entities.Access.Low)
+        {
+            return false;
+        }
+        var acceptingUserOwnershipIqs = userAccepting.IqAssigned.Select(c => c.Id);
+        var requestingUserOwnershipIqs = userRequesting.IqAssigned.Select(c => c.Id);
+        return acceptingUserOwnershipIqs.Any(c => requestingUserOwnershipIqs.Contains(c));
     }
 }
