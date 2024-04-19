@@ -14,7 +14,6 @@ using Write.Implementation.Dto;
 namespace ClayLocks.Controllers;
 
 [Route("[controller]/[action]")]
-[Authorize]
 [ApiController]
 public class Locks : ApiController
 {
@@ -40,8 +39,9 @@ public class Locks : ApiController
     [HttpPost] 
     public async Task<IActionResult> OpenLock(OpenLockDto dto)
     {
-        // for testing purpose Im passing the userid in the body of the request
-        // normally we would user the JWT to retrieve the user id from the IDP
+        // for testing purpose we can pass the userid in the body of the request
+        // normally we would always use the JWT to retrieve the user id from the IDP
+        dto.UserId ??= _userManager.GetUserId(User)!;
         return ToActionResult(await _unlock.HandleAsync(dto));
     }
     
@@ -65,6 +65,7 @@ public class Locks : ApiController
     public async Task<IActionResult> UpgradeSecurity(UpgradeSecurityDto dto)
     {
         var userIdpId = _userManager.GetUserId(User)!;
-        return ToActionResult(await _securityUpgradeHandler.HandleAsync(new UpgradeSecurityCommand(userIdpId, dto.LockId)));
+        var result = await _securityUpgradeHandler.HandleAsync(new UpgradeSecurityCommand(userIdpId, dto.LockId));
+        return ToActionResult(result);
     }
 }

@@ -30,11 +30,17 @@ public class AcceptBindRequestCommandHandler : ICommandHandler<AcceptBindRequest
         {
             return Result.Failure(Errors.IqDontExist);
         }
+
+        var user = await _userRepository.GetByIdAsync(command.UserToBind);
         
-        var user = await _userRepository.GetByIdAsync(command.UserToBind) ?? new User(command.UserToBind);
+        if(user is null)
+        {
+            user = new User(command.UserToBind);
+            user.IqAssigned.Add(requestedIq);
+            await _userRepository.AddAsync(user);
+        }
         
         user.IqAssigned.Add(requestedIq);
-        
         await _unitOfWork.SaveChangesAsync();
         
         await _capPublisher.PublishAsync(nameof(IqAssignedEvent), new IqAssignedEvent {

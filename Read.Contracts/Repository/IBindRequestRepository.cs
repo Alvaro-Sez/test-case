@@ -6,5 +6,5 @@ public interface IBindRequestRepository: IRepository<BindIqRequest>
 {
     Task<IEnumerable<BindIqRequest>> GetAllAsync();
 
-    Task DeleteAsync(Guid userId, string buildingName);
+    Task DeleteAsync(BindIqRequest request);
 }

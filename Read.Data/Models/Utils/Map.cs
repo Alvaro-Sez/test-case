@@ -48,7 +48,7 @@ public static class Map
     }
     public static IEnumerable<BindIqRequest> ToDomain(IEnumerable<BindRequestModel> models)
     {
-        return models.Select(c=> new BindIqRequest(c.UserRequestingAccessId, c.BuildingName, c.Id));
+        return models.Select(c=> new BindIqRequest(c.UserRequestingAccessId, c.BuildingName));
     }
     
     public static BindIqRequest ToDomain(BindRequestModel entity)
@@ -57,7 +57,6 @@ public static class Map
         {
             AuthorId = entity.UserRequestingAccessId,
             IqBuildingName = entity.BuildingName,
-            Id = entity.Id
         };
     }
     public static BindRequestModel ToModel(BindIqRequest entity)
@@ -66,7 +65,6 @@ public static class Map
         {
             BuildingName = entity.IqBuildingName,
             UserRequestingAccessId = entity.AuthorId,
-            Id = entity.Id
         };
     }
     

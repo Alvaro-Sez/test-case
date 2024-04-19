@@ -18,10 +18,9 @@ public class BindRequestRepository: IBindRequestRepository
         await _collection.InsertOneAsync(Map.ToModel(entity));
     }
 
-    public async Task<BindIqRequest?> GetAsync(Guid id)
+    public Task<BindIqRequest?> GetAsync(Guid id)
     {
-        var iqModel = await _collection.FindAsync(c => c.Id == id);
-        return Map.ToDomain(await iqModel.FirstOrDefaultAsync());
+        throw new NotImplementedException();
     }
 
     public async Task<bool> ExistAsync(BindIqRequest request)
@@ -31,9 +30,9 @@ public class BindRequestRepository: IBindRequestRepository
         return await result.AnyAsync();
     }
 
-    public async Task DeleteAsync(Guid userId, string buildingName)
+    public async Task DeleteAsync(BindIqRequest request)
     {
-        await _collection.DeleteOneAsync(c=>c.BuildingName ==buildingName && c.UserRequestingAccessId == userId);
+        await _collection.DeleteOneAsync(c =>string.Equals(request.IqBuildingName, c.BuildingName) && request.AuthorId == c.UserRequestingAccessId);
     }
 
     public async Task<IEnumerable<BindIqRequest>> GetAllAsync()

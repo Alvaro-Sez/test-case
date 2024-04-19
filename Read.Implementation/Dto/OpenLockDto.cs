@@ -5,6 +5,6 @@ namespace Read.Implementation.Dto;
 
 public class OpenLockDto
 {
-    [ValidGuid] [Required] public string UserId { get; set; } = string.Empty;
+    public string? UserId { get; set; }
     [ValidGuid] [Required] public string LockId { get; set; } = string.Empty;
 }

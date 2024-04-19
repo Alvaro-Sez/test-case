@@ -22,6 +22,15 @@ public class AcceptHigherAccessCommandHandler : ICommandHandler<AcceptHigherAcce
     public async Task<Result> HandleAsync(AcceptHigherAccessCommand command)
     {
         var userRequesting = await _userRepository.GetByIdAsync(command.UserRequestingId);
+        
+        if(command.IsAdmin && userRequesting != null)
+        {
+            userRequesting.AccessLevel = Contacts.Entities.Access.High;
+            await _unitOfWork.SaveChangesAsync();
+            await _publisher.PublishAsync(nameof(PermissionUpgradedEvent), new PermissionUpgradedEvent(){UserId =userRequesting.Id});
+            return Result.Success();
+        }
+        
         var userAccepting = await _userRepository.GetByIdAsync(command.UserAcceptingId);
         if(userRequesting is null || userAccepting is null)
         {

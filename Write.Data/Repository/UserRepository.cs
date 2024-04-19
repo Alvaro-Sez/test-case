@@ -19,8 +19,8 @@ public class UserRepository : IUserRepository
         return await _dbContext.Users.Include(c=>c.IqAssigned).FirstOrDefaultAsync(c=>c.Id==id);
     }
 
-    public Task AddAsync(User entity)
+    public async Task AddAsync(User entity)
     {
-        throw new NotImplementedException();
+        await _dbContext.Users.AddAsync(entity);
     }
 }

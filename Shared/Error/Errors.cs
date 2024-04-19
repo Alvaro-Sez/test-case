@@ -7,7 +7,7 @@ public static class Errors
     public static readonly Error RequestAlreadyPlaced = new Error("103", "you already placed a request");
     public static readonly Error IqNotAssigned = new Error("104", "there are no IQ assigned for this account");
     public static readonly Error UserDontExists = new Error("105", "this user doesn't exist");
-    public static readonly Error NoLevelAccess = new Error("106", "High level access is require for this operation");
+    public static readonly Error NoLevelAccess = new Error("106", "High level access is required for this operation");
     public static readonly Error LockNotExist = new Error("107", "this lock doesn't exist");
     public static readonly Error NoAccessToThisLock = new Error("108", "you dont have the IQ assigned for this lock");
     public static readonly Error UserNotAssignedToThisIq = new Error("109", "you are not assigned to this IQ");

@@ -37,6 +37,6 @@ public class IqAssignedEventHandler: IEventHandler<IqAssignedEvent> , ICapSubscr
         user.Iqs = user.Iqs.Distinct().ToList();
         await _userAccess.SetAsync(user);
         
-        await _bindRequest.DeleteAsync(@event.UserId, @event.BuildingName);
+        await _bindRequest.DeleteAsync(new BindIqRequest(@event.UserId, @event.BuildingName));
     }
 }
