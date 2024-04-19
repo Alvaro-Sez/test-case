@@ -6,19 +6,19 @@ using Write.Contacts.Repository;
 
 namespace Write.Implementation.Commands.Access.Handlers;
 
-public class AssignHigherPermissionCommandHandler : ICommandHandler<AssignHigherPermissionCommand>
+public class AcceptHigherAccessCommandHandler : ICommandHandler<AcceptHigherAccessCommand>
 {
     private readonly IUserRepository _userRepository;
     private readonly IUnitOfWork _unitOfWork;
     private readonly ICapPublisher _publisher;
-    public AssignHigherPermissionCommandHandler(IUserRepository userRepository, IUnitOfWork unitOfWork, ICapPublisher publisher)
+    public AcceptHigherAccessCommandHandler(IUserRepository userRepository, IUnitOfWork unitOfWork, ICapPublisher publisher)
     {
         _userRepository = userRepository;
         _unitOfWork = unitOfWork;
         _publisher = publisher;
     }
 
-    public async Task<Result> HandleAsync(AssignHigherPermissionCommand command)
+    public async Task<Result> HandleAsync(AcceptHigherAccessCommand command)
     {
         var user = await _userRepository.GetByIdAsync(command.UserRequestingId);
         if(user is null)

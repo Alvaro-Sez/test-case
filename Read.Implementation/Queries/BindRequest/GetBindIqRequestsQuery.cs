@@ -1,11 +1,8 @@
+using Read.Contracts.Entities;
+
 namespace Read.Implementation.Queries.BindRequest;
 
 public class GetBindIqRequestsQuery 
 {
-    public GetBindIqRequestsQuery(string userId)
-    {
-        UserId = userId;
-    }
-
-    public string? UserId { get; set; }
+    public IEnumerable<BindIqRequest> Requests { get; set; }
 }

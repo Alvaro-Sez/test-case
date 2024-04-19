@@ -16,13 +16,13 @@ namespace ClayLocks.Controllers;
 [ApiController]
 public class BindRequest : ApiController
 {
-    private readonly IQueryHandler<IEnumerable<BindIqRequest>> _queryHandler;
+    private readonly IQueryHandler<GetBindIqRequestsQuery> _queryHandler;
     private readonly UserManager<IdentityUser> _userManager;
     private readonly Read.Contracts.Commands.ICommandHandler<CreateBindRequestCommand> _createBindRequestHandler;
     private readonly ICommandHandler<AcceptBindRequestCommand> _acceptBindRequestHandler;
 
     public BindRequest(
-        IQueryHandler<IEnumerable<BindIqRequest>> queryHandler,
+        IQueryHandler<GetBindIqRequestsQuery> queryHandler,
         UserManager<IdentityUser> userManager,
         Read.Contracts.Commands.ICommandHandler<CreateBindRequestCommand> createBindRequestHandler,
         ICommandHandler<AcceptBindRequestCommand> acceptBindRequestHandler)

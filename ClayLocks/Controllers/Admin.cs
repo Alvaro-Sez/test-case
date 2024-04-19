@@ -5,11 +5,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ClayLocks.Controllers;
 
+// ONLY FOR TEST
 [Route("admin")]
 [ApiController]
 public class Admin : ApiController
 {
     
+// ONLY FOR TEST
    private readonly RoleManager<IdentityRole> _roleManager;
    private readonly UserManager<IdentityUser> _userManager;
 
@@ -18,6 +20,7 @@ public class Admin : ApiController
       _roleManager = roleManager;
       _userManager = userManager;
    }
+// ONLY FOR TEST
    [Authorize]
    [HttpGet] 
    public async Task<IActionResult> CreateAdmin()

@@ -38,12 +38,19 @@ public class UpgradeSecurityCommandHandler : ICommandHandler<UpgradeSecurityComm
         {
             return Result.Failure(Errors.NoLevelAccess);
         }
-
+        
         var @lock = await _lockRepository.GetByIdAsync(command.LockId);
+        
         if(@lock is null)
         {
             return Result.Failure(Errors.LockNotExist);
         }
+        
+        if(user.IqAssigned.Select(c=>c.Id).Contains(command.LockId))
+        {
+            return Result.Failure(Errors.NoAccessToThisLock);
+        }
+        
         @lock.UpgradeSecurity();
         await _unitOfWork.SaveChangesAsync();
         await _publisher.PublishAsync(nameof(IncreasedLockSecurityEvent),

@@ -1,6 +1,6 @@
 namespace Write.Implementation.Commands.Access;
 
-public class AssignHigherPermissionCommand
+public class AcceptHigherAccessCommand
 {
     public Guid UserRequestingId { get; set; }
 }
