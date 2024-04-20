@@ -27,7 +27,7 @@ public class GetAccessRequestQueryHandler : IQueryHandlerT<GetAccessRequestsQuer
         
         var userCheckingRequests = await _userAccessRepository.GetAsync(dto.UserId);
         
-        if(userCheckingRequests is null)
+        if(userCheckingRequests is null || userCheckingRequests.Iqs.Count == 0)
         {
             return Result<GetAccessRequestsQuery>.Failure(Errors.IqNotAssigned);
         }
@@ -38,7 +38,6 @@ public class GetAccessRequestQueryHandler : IQueryHandlerT<GetAccessRequestsQuer
         }
         
         var requestAvailable = requests.Where(c => userCheckingRequests.Iqs.Contains(c.IqId));
-        
         return Result<GetAccessRequestsQuery>.From(new GetAccessRequestsQuery() { Requests = requestAvailable });
     }
 }

@@ -38,9 +38,7 @@ public class Locks : ApiController
     [HttpPost] 
     public async Task<IActionResult> OpenLock(OpenLockDtoRequest dto)
     {
-        // for testing purpose we can pass the userid in the body of the request
-        // normally we would always use the JWT to retrieve the user id from the IDP
-        var userId =GetUserId(User);
+        var userId = GetUserId(User);
         return ToActionResult(await _unlock.HandleAsync(new OpenLockDto(userId,  dto.LockId!)));
     }
     
