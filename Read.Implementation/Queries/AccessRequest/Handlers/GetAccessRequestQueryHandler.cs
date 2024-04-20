@@ -6,7 +6,7 @@ using Shared;
 
 namespace Read.Implementation.Queries.AccessRequest.Handlers;
 
-public class GetAccessRequestQueryHandler : IQueryHandlerT<GetAccessRequestsQuery, GetAccessRequestDto>
+public class GetAccessRequestQueryHandler : IQueryHandlerT<GetAccessRequestsQuery, GetAccessRequest>
 {
     private readonly IAccessRequestRepository _requestRepository;
     private readonly IUserAccessRepository _userAccessRepository;
@@ -16,15 +16,16 @@ public class GetAccessRequestQueryHandler : IQueryHandlerT<GetAccessRequestsQuer
         _requestRepository = requestRepository;
         _userAccessRepository = userAccessRepository;
     }
-    public async Task<Result<GetAccessRequestsQuery>> HandleAsync(GetAccessRequestDto dto)
+    public async Task<Result<GetAccessRequestsQuery>> HandleAsync(GetAccessRequest dto)
     {
         var requests = await _requestRepository.GetAllAsync();
+        
         if(dto.IsAdmin)
         {
             return Result<GetAccessRequestsQuery>.From(new GetAccessRequestsQuery() { Requests = requests });
         }
         
-        var userCheckingRequests = await _userAccessRepository.GetAsync(Guid.Parse(dto.UserId));
+        var userCheckingRequests = await _userAccessRepository.GetAsync(dto.UserId);
         
         if(userCheckingRequests is null)
         {
@@ -36,8 +37,7 @@ public class GetAccessRequestQueryHandler : IQueryHandlerT<GetAccessRequestsQuer
             return Result<GetAccessRequestsQuery>.Failure(Errors.NoLevelAccess);
         }
         
-        var requestAvailable = requests
-            .Where(c => userCheckingRequests.Iqs.Contains(c.IqId));
+        var requestAvailable = requests.Where(c => userCheckingRequests.Iqs.Contains(c.IqId));
         
         return Result<GetAccessRequestsQuery>.From(new GetAccessRequestsQuery() { Requests = requestAvailable });
     }

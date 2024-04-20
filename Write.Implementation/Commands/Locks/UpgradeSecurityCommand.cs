@@ -2,9 +2,9 @@ namespace Write.Implementation.Commands.Locks;
 
 public class UpgradeSecurityCommand 
 {
-    public UpgradeSecurityCommand(string requestingUserId, string lockId)
+    public UpgradeSecurityCommand(Guid requestingUserId, string lockId)
     {
-        RequestingUserId = Guid.Parse(requestingUserId);
+        RequestingUserId = requestingUserId;
         LockId = Guid.Parse(lockId);
     }
     public Guid RequestingUserId { get;init; }

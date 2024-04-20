@@ -1,5 +1,6 @@
 using ClayLocks.IDP;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Read.Contracts.Queries;
 using Read.Implementation.Queries.IQ;
@@ -16,7 +17,9 @@ public class Iq: ApiController
     private readonly ICommandHandler<CreateIQCommand> _handler;
     private readonly IQueryHandler<IEnumerable<GetIqsQuery>> _getIqs;
 
-    public Iq(ICommandHandler<CreateIQCommand> handler, IQueryHandler<IEnumerable<GetIqsQuery>> getIqs)
+    public Iq(ICommandHandler<CreateIQCommand> handler,
+    IQueryHandler<IEnumerable<GetIqsQuery>> getIqs,
+    UserManager<IdentityUser> userManager):base(userManager)
     {
         _handler = handler;
         _getIqs = getIqs;
@@ -24,7 +27,7 @@ public class Iq: ApiController
     [Authorize(Roles=Roles.Admin)]
     [HttpPost] 
     public async Task<IActionResult> Create(CreateIqDto dto)
-    {//TODO implement validation of the admin
+    {
         var result = await _handler.HandleAsync(new CreateIQCommand(dto.BuildingName));
         return ToActionResult(result);
     }
@@ -33,7 +36,6 @@ public class Iq: ApiController
     public async Task<IActionResult> GetAll()
     {
         var iqs = await _getIqs.HandleAsync();
-        
         return ToActionResult(iqs);
     }
 }

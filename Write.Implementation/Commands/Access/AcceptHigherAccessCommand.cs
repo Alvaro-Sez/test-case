@@ -2,9 +2,9 @@ namespace Write.Implementation.Commands.Access;
 
 public class AcceptHigherAccessCommand
 {
-    public AcceptHigherAccessCommand(string userRequestingId, string userAcceptingId, bool isAdmin)
+    public AcceptHigherAccessCommand(string userRequestingId, Guid userAcceptingId, bool isAdmin)
     {
-        UserAcceptingId = Guid.Parse(userAcceptingId);
+        UserAcceptingId = userAcceptingId;
         UserRequestingId = Guid.Parse(userRequestingId);
         IsAdmin = isAdmin;
     }

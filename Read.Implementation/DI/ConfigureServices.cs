@@ -39,7 +39,7 @@ public static class ConfigureServices
         service.AddScoped<IQueryHandlerT<OpenLockQuery, OpenLockDto>,OpenLockQueryHandler>();
         service.AddScoped<IQueryHandlerT<GetEventsQuery, GetEventsDto>, GetEventsQueryHandler>();
         service.AddScoped<IQueryHandlerT<GetEventsQuery, GetEventsDto>, GetEventsQueryHandler>();
-        service.AddScoped<IQueryHandlerT<GetAccessRequestsQuery, GetAccessRequestDto>, GetAccessRequestQueryHandler>();
+        service.AddScoped<IQueryHandlerT<GetAccessRequestsQuery, GetAccessRequest>, GetAccessRequestQueryHandler>();
        
         service.AddScoped<ICommandHandler<CreateBindRequestCommand>,CreateBindRequestCommandHandler>();
         service.AddScoped<ICommandHandler<CreateHigherAccessRequestCommand>,CreateHigherAccesRequestCommandHandler>();

@@ -1,0 +1,12 @@
+﻿services:
+  claylocks:
+    image: claylocks
+    build:
+      context: .
+      dockerfile: ClayLocks/Dockerfile
+
+  eventbus:
+    image: eventbus
+    build:
+      context: .
+      dockerfile: EventBus/Dockerfile

@@ -22,14 +22,14 @@ public class OpenLockQueryHandler: IQueryHandlerT<OpenLockQuery, OpenLockDto>
 
     public async Task<Result<OpenLockQuery>> HandleAsync(OpenLockDto openLockDto)
     {
-        var user = await _userAccess.GetAsync(Guid.Parse(openLockDto.UserId));
+        var user = await _userAccess.GetAsync(openLockDto.UserId!);
         
         if(user is null)
         {
             return Result<OpenLockQuery>.Failure(Errors.IqNotAssigned);
         }
         
-        var isAllowed = await IsAllowed(user, Guid.Parse(openLockDto.LockId));
+        var isAllowed = await IsAllowed(user,  openLockDto.LockId);
         
         try
         {
@@ -49,11 +49,11 @@ public class OpenLockQueryHandler: IQueryHandlerT<OpenLockQuery, OpenLockDto>
         var @lock = userIqs.SelectMany(c => c.Locks).FirstOrDefault(c=>c.Id == lockId);
         return @lock is not null && user.Access == @lock.Access;
     }
-    private EventRecord EventFrom(Guid userId, string lockId, bool access)
+    private EventRecord EventFrom(Guid userId, Guid lockId, bool access)
     {
         return new EventRecord
         {
-            LockId = Guid.Parse(lockId),
+            LockId = lockId,
             UserId = userId,
             Type = access ? EventType.AccessGranted : EventType.AccessDenied,
             IssuedAt = DateTime.Now.ToUniversalTime()

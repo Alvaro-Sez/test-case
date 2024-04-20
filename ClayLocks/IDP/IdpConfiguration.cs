@@ -15,10 +15,5 @@ public static class IdpConfiguration
             .AddIdentityApiEndpoints<IdentityUser>()
             .AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<IdentityData>();
-       //     .AddAuthorization()
-       //     
-       //     .AddUserManager<IdentityUser>()
-       //     .AddRoles<IdentityRole>()
-       //     .AddRoleManager<IdentityRole>()
     }
 }

@@ -3,11 +3,9 @@ using Read.Implementation.Dto.CustomValidation;
 
 namespace Read.Implementation.Dto;
 
-public record UserIdDto
+public class OpenLockDtoRequest
 {
-    public UserIdDto(Guid userId)
-    {
-        UserId = userId;
-    }
-    public Guid UserId{ get; init; }
+    [ValidGuid][Required]
+    public string? LockId { get; set; } 
+    
 }

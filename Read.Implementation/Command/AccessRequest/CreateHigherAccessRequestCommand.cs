@@ -2,9 +2,9 @@ namespace Read.Implementation.Command.AccessRequest;
 
 public class CreateHigherAccessRequestCommand
 {
-    public CreateHigherAccessRequestCommand(string userId, string iqId)
+    public CreateHigherAccessRequestCommand(Guid userId, string iqId)
     {
-        UserId = Guid.Parse(userId);
+        UserId = userId;
         IqId = Guid.Parse(iqId);
     }
     public Guid UserId { get; set; }

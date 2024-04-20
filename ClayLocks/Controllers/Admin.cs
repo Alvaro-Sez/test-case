@@ -8,7 +8,7 @@ namespace ClayLocks.Controllers;
 // ONLY FOR TEST
 [Route("admin")]
 [ApiController]
-public class Admin : ApiController
+public class Admin :ControllerBase
 {
     
 // ONLY FOR TEST

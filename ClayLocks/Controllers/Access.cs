@@ -20,13 +20,16 @@ namespace ClayLocks.Controllers;
 public class Access : ApiController
 {
     private readonly ICommandHandler<CreateHigherAccessRequestCommand> _accessHandler;
-    private readonly IQueryHandlerT<GetAccessRequestsQuery, GetAccessRequestDto> _accessRequestQueryHandler;
+    private readonly IQueryHandlerT<GetAccessRequestsQuery, GetAccessRequest> _accessRequestQueryHandler;
     private readonly Write.Contacts.Commands.ICommandHandler<AcceptHigherAccessCommand> _acceptHigher;
-    private readonly UserManager<IdentityUser> _userManager;
-    public Access(ICommandHandler<CreateHigherAccessRequestCommand> accessHandler, UserManager<IdentityUser> userManager, IQueryHandlerT<GetAccessRequestsQuery, GetAccessRequestDto> accessRequestQueryHandler, Write.Contacts.Commands.ICommandHandler<AcceptHigherAccessCommand> acceptHigher)
+    public Access(
+        ICommandHandler<CreateHigherAccessRequestCommand> accessHandler, 
+        IQueryHandlerT<GetAccessRequestsQuery,GetAccessRequest> accessRequestQueryHandler, 
+        Write.Contacts.Commands.ICommandHandler<AcceptHigherAccessCommand> acceptHigher,
+        UserManager<IdentityUser> userManager 
+    ):base(userManager)
     {
         _accessHandler = accessHandler;
-        _userManager = userManager;
         _accessRequestQueryHandler = accessRequestQueryHandler;
         _acceptHigher = acceptHigher;
     }
@@ -34,34 +37,22 @@ public class Access : ApiController
     [HttpPost] 
     public async Task<IActionResult> CreateUpgradeRequest(HigherAccessDto dto)
     {
-        var userIdpId = _userManager.GetUserId(User)!;
-        var result = await _accessHandler.HandleAsync(new CreateHigherAccessRequestCommand(userIdpId, dto.IqId));
+        var result = await _accessHandler.HandleAsync(new CreateHigherAccessRequestCommand(GetUserId(User), dto.IqId));
         return ToActionResult(result);
     }
     
     [HttpGet] 
     public async Task<IActionResult> GetRequests()
     {
-        var query = new GetAccessRequestDto()
-        {
-            UserId = _userManager.GetUserId(User)!,
-            IsAdmin =  IsAdmin(User)
-        };
+        var query = new GetAccessRequest(GetUserId(User), IsAdmin(User));
+        
         return ToActionResult(await _accessRequestQueryHandler.HandleAsync(query));
     }
     [HttpPost] 
     public async Task<IActionResult> AcceptRequest(AcceptHigherAccessDto dto)
     {
-        var result = await _acceptHigher.HandleAsync(new AcceptHigherAccessCommand(dto.UserId, _userManager.GetUserId(User)!, IsAdmin(User)));
+        var command = new AcceptHigherAccessCommand(dto.UserId, GetUserId(User), IsAdmin(User));
+        var result = await _acceptHigher.HandleAsync(command);
         return ToActionResult(result);
     }
-    private static bool IsAdmin(ClaimsPrincipal user)
-    {
-        var userIdentity = (ClaimsIdentity)user.Identity!;
-        var claims = userIdentity.Claims;
-        var roleClaimType = userIdentity.RoleClaimType;
-        var claimRoles = claims.Where(c => c.Type == ClaimTypes.Role).ToList();
-        var roles =claimRoles.Select(c => c.Value);
-        return roles.Contains(Roles.Admin);
-    } 
 }
