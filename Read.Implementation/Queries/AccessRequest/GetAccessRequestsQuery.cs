@@ -4,5 +4,5 @@ namespace Read.Implementation.Queries.AccessRequest;
 
 public class GetAccessRequestsQuery
 {
-    public IEnumerable<AccessLevelRequest> Requests { get; set; }
+    public IEnumerable<AccessLevelRequest> Requests { get; set; } = Enumerable.Empty<AccessLevelRequest>();
 }
