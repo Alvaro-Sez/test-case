@@ -52,14 +52,7 @@ public class Access : ApiController
     [HttpPost] 
     public async Task<IActionResult> AcceptRequest(AcceptHigherAccessDto dto)
     {
-        var command = new AcceptHigherAccessCommand()
-        {
-            UserAcceptingId = Guid.Parse(_userManager.GetUserId(User)!),
-            IsAdmin =  IsAdmin(User),
-            UserRequestingId = Guid.Parse(dto.UserId)
-
-        };
-        var result = await _acceptHigher.HandleAsync(command);
+        var result = await _acceptHigher.HandleAsync(new AcceptHigherAccessCommand(dto.UserId, _userManager.GetUserId(User)!, IsAdmin(User)));
         return ToActionResult(result);
     }
     private static bool IsAdmin(ClaimsPrincipal user)

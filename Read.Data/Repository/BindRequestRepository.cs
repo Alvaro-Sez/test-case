@@ -18,11 +18,6 @@ public class BindRequestRepository: IBindRequestRepository
         await _collection.InsertOneAsync(Map.ToModel(entity));
     }
 
-    public Task<BindIqRequest?> GetAsync(Guid id)
-    {
-        throw new NotImplementedException();
-    }
-
     public async Task<bool> ExistAsync(BindIqRequest request)
     {
         var result = await _collection

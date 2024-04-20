@@ -7,22 +7,15 @@ namespace Write.Data.Repository;
 
 public class LockRepository:  ILockRepository
 {
-    //TODO not inject the context , only the dbset
-    private readonly ApplicationDbContext _dbContext;
-
+    private readonly DbSet<Lock> _dbSet;
     public LockRepository(ApplicationDbContext dbContext)
     {
-        _dbContext = dbContext;
+        _dbSet = dbContext.Locks;
     }
     public async Task<Lock?> GetByIdAsync(Guid id)
     {
-        return await _dbContext.Locks
+        return await _dbSet
             .Include(c => c.Iq)
             .FirstOrDefaultAsync(c => c.Id == id);
-    }
-
-    public Task AddAsync(Lock entity)
-    {
-        throw new NotImplementedException();
     }
 }

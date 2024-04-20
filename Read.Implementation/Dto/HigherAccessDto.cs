@@ -5,7 +5,5 @@ namespace Read.Implementation.Dto;
 
 public class HigherAccessDto
 {
-    [Required]
-    [ValidGuid]
-    public string IqId { get; set; }
+    [Required] [ValidGuid] public string IqId { get; set; } = string.Empty;
 }

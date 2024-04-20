@@ -19,12 +19,6 @@ public class AccessRequestRepository : IAccessRequestRepository
         await _collection.InsertOneAsync(Map.ToModel(entity));
     }
 
-    public Task<AccessLevelRequest?> GetAsync(Guid id)
-    {
-        throw new NotImplementedException();
-    }
-
-
     public async Task<bool> ExistAsync(AccessLevelRequest levelRequest)
     {
         var result = await _collection

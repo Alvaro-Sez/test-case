@@ -18,7 +18,11 @@ public class GetEventsQueryHandler: IQueryHandlerT<GetEventsQuery, GetEventsDto>
     }
     public async Task<Result<GetEventsQuery>> HandleAsync(GetEventsDto dto)
     {
-        if(!await _userAccess.ExistAsync(new UserAccess{UserId = Guid.Parse(dto.UserId)}))
+        if(!Guid.TryParse(dto.UserId, out var userId))
+        {
+            return Result<GetEventsQuery>.Failure(Errors.IsNotAGuid);
+        }
+        if(!await _userAccess.ExistAsync(new UserAccess{UserId =userId}))
         {
             return Result<GetEventsQuery>.Failure(Errors.UserDontExists);
         }

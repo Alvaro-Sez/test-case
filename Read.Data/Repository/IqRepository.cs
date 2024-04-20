@@ -27,21 +27,10 @@ public class IqRepository: IIqRepository
         return Map.ToDomain(await iqModel.FirstOrDefaultAsync());
     }
 
-    public Task<bool> ExistAsync(Iq entity)
-    {
-        throw new NotImplementedException();
-    }
-
     public async Task<bool> ExistAsync(string buildingName)
     {
         var iqs =await _collection.FindAsync(c=>string.Equals(c.BuildingName, buildingName));
         return await iqs.AnyAsync();
-    }
-
-    public async Task<Iq?> GetByNameAsync(string buildingName)
-    {
-        var iqs =await _collection.FindAsync(c=>string.Equals(c.BuildingName, buildingName));
-        return Map.ToDomain(await iqs.FirstOrDefaultAsync());
     }
 
     public async Task<IEnumerable<Iq>> GetAllAsync()

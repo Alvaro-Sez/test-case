@@ -1,5 +1,3 @@
-
-using Api.Commands.Domain.Ports;
 using Write.Contacts.Repository;
 using Write.Data.EF;
 

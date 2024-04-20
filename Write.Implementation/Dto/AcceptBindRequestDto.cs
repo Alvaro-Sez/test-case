@@ -5,15 +5,11 @@ namespace Write.Implementation.Dto;
 
 public class AcceptBindRequestDto
 {
-    public AcceptBindRequestDto(string buildingName)
-    {
-        BuildingName = buildingName;
-    }
-    
+
     [Required, MinLength(4), MaxLength(20)]
-    public string BuildingName { get; set; }
+    public string BuildingName { get; set; } = string.Empty;
     
     [Required]
     [ValidGuid]
-    public string UserToBind { get; set; }
+    public string UserToBind { get; set; } = string.Empty;
 }

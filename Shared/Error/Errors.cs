@@ -11,4 +11,6 @@ public static class Errors
     public static readonly Error LockNotExist = new Error("107", "this lock doesn't exist");
     public static readonly Error NoAccessToThisLock = new Error("108", "you dont have the IQ assigned for this lock");
     public static readonly Error UserNotAssignedToThisIq = new Error("109", "you are not assigned to this IQ");
+    public static readonly Error IsNotAGuid = new Error("110", "The Id is not a valid GUID");
+    
 }

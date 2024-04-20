@@ -19,5 +19,5 @@ public class Iq
     public Guid Id { get; init; }
     public string BuildingName { get; init; }
     public ICollection<Lock> Locks { get; init; }
-    public ICollection<User> Users { get; }
+    public ICollection<User> Users { get; init; }
 }

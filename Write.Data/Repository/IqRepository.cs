@@ -7,35 +7,19 @@ namespace Write.Data.Repository;
 
 public class IqRepository : IIqRepository 
 {
-    private readonly ApplicationDbContext _context;
+    private readonly DbSet<Iq> _dbSet;
     public IqRepository(ApplicationDbContext context)
     {
-        _context = context;
+        _dbSet = context.Iqs;
     }
-    public Task<Iq?> GetByIdAsync(Guid id)
-    {
-        throw new NotImplementedException();
-    }
-
     public async Task AddAsync(Iq entity)
     {
-        await _context.Iqs.AddAsync(entity);
-    }
-
-
-    public Task<bool> ExistsAsync(string buildingName)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<IEnumerable<Iq>> GetAllAsync()
-    {
-        throw new NotImplementedException();
+        await _dbSet.AddAsync(entity);
     }
 
     public async Task<Iq?> GetByBuildingNameAsync(string buildingName)
     {
-        return await _context.Iqs
+        return await _dbSet 
             .Include(c=>c.Locks)
             .FirstOrDefaultAsync(c => string.Equals(buildingName, c.BuildingName));
     }

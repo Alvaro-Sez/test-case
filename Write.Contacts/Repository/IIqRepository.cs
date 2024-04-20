@@ -1,11 +1,10 @@
-using Api.Commands.Domain.Ports;
 using Write.Contacts.Entities;
 
 namespace Write.Contacts.Repository;
 
-public interface IIqRepository : IRepository<Iq>
+public interface IIqRepository 
 {
-    Task<bool> ExistsAsync(string buildingName);
-    Task<IEnumerable<Iq>> GetAllAsync();
     Task<Iq?> GetByBuildingNameAsync(string buildingName);
+    
+    Task AddAsync(Iq entity);
 }

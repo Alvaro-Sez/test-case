@@ -22,4 +22,8 @@
         </PackageReference>
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Write.Implementation.Tests\" />
+    </ItemGroup>
+
 </Project>
