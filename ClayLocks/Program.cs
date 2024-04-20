@@ -21,7 +21,6 @@ builder.Services.AddCap(options =>
     options.UseInMemoryStorage();
     options.UseRabbitMQ(Environment.GetEnvironmentVariable("ENV_RABBIT")!);
     options.ConsumerThreadCount = 0;
-    options.UseDashboard();
 });
 var app = builder.Build();
 
@@ -30,6 +29,7 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.ApplyMigrations();
 }
 
 app.UseAuthentication();

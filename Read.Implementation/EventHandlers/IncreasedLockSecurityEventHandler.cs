@@ -24,7 +24,7 @@ public class IncreasedLockSecurityEventHandler : IEventHandler<IncreasedLockSecu
         {
             var iq = await _iqRepository.GetAsync(@event.IqId);
             
-            if(iq is not null)
+            if(iq is null)
             {
                 throw new ApplicationException("Invalid state of data");
             }
