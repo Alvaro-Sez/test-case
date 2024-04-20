@@ -12,7 +12,7 @@ public static class ConfigureServices
     public static void AddWriteDataServices(this IServiceCollection service, IConfiguration configuration)
     {
         service.AddDbContext<ApplicationDbContext>(opt=>
-            opt.UseSqlServer(configuration.GetConnectionString("ENV_SQL_URL"))
+            opt.UseSqlServer(Environment.GetEnvironmentVariable("ENV_SQL_URL"))
         );
         service.AddScoped<IUnitOfWork, UnitOfWork>();
         service.AddScoped<IIqRepository,IqRepository>();

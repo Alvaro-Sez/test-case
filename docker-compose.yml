@@ -4,9 +4,47 @@
     build:
       context: .
       dockerfile: ClayLocks/Dockerfile
+    ports:
+      - "9000:8080"
+    restart: always
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      - ENV_SQL_URL=Server=mmsql;Database=Locks;User Id=sa;Password=123456Aa?;TrustServerCertificate=True
+      - ENV_RABBIT=rabbitmq
+      - ENV_MONGO_URL=mongodb://mongodb:27017
 
   eventbus:
     image: eventbus
     build:
       context: .
       dockerfile: EventBus/Dockerfile
+    restart: always
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ENV_RABBIT=rabbitmq
+      - ENV_MONGO_URL=mongodb://mongodb:27017
+       
+  mmsql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sql-server
+    restart: always
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "123456Aa?"
+    ports:
+      - "1433:1433"
+      
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    hostname: 'rabbitmq'
+    restart: always
+    labels:
+      NAME: 'rabbitmq'
+
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    ports:
+      - "27017:27017"
