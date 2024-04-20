@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Logging;
 using Read.Contracts.Entities;
 using Read.Contracts.Events;
 using Read.Contracts.Queries;
@@ -12,12 +13,14 @@ public class OpenLockQueryHandler: IQueryHandlerT<OpenLockQuery, OpenLockDto>
     private readonly IUserAccessRepository _userAccess;
     private readonly IIqRepository _iqRepository;
     private readonly IEventRepository _eventRepository;
+    private readonly ILogger<OpenLockQueryHandler> _logger;
 
-    public OpenLockQueryHandler(IUserAccessRepository userAccess, IEventRepository eventRepository, IIqRepository iqRepository)
+    public OpenLockQueryHandler(IUserAccessRepository userAccess, IEventRepository eventRepository, IIqRepository iqRepository, ILogger<OpenLockQueryHandler> logger)
     {
         _userAccess = userAccess;
         _eventRepository = eventRepository;
         _iqRepository = iqRepository;
+        _logger = logger;
     }
 
     public async Task<Result<OpenLockQuery>> HandleAsync(OpenLockDto openLockDto)
@@ -26,6 +29,7 @@ public class OpenLockQueryHandler: IQueryHandlerT<OpenLockQuery, OpenLockDto>
         
         if(user is null)
         {
+            _logger.LogInformation("denied action: {query} from user: {userId}, reason: {error}",nameof(OpenLockQuery), openLockDto.UserId, Errors.IqNotAssigned);
             return Result<OpenLockQuery>.Failure(Errors.IqNotAssigned);
         }
         
@@ -33,13 +37,15 @@ public class OpenLockQueryHandler: IQueryHandlerT<OpenLockQuery, OpenLockDto>
         
         try
         {
-            await _eventRepository.SetAsync(EventFrom(user.UserId, openLockDto.LockId, isAllowed));
+            var notifyEvent = EventFrom(user.UserId, openLockDto.LockId, isAllowed);
+            await _eventRepository.SetAsync(notifyEvent);
         }
         catch (Exception e)
         {
-            //TODO Log
-            return Result<OpenLockQuery>.From(new OpenLockQuery { Unlock = isAllowed });
+            _logger.LogWarning(e, "Exception while trying to save an event");
+            return Result<OpenLockQuery>.From( new OpenLockQuery { Unlock = isAllowed });
         }
+        _logger.LogInformation("Access: {access} for user:{User}, in lock: {Lock}", isAllowed? "Granted": "Denied", user.UserId, openLockDto.LockId);
         return Result<OpenLockQuery>.From(new OpenLockQuery { Unlock = isAllowed });
         
     }

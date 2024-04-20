@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Logging;
 using Moq;
 using Read.Contracts.Entities;
 using Read.Contracts.Events;
@@ -22,7 +23,7 @@ public class OpenLockQueryHandlerTests
             .ReturnsAsync(Fixture.FakeUserWithNoIq);
        
         var input = new OpenLockDto(userId:Guid.NewGuid(), Fixture.LockIdInput);
-        var sut = new OpenLockQueryHandler(userAccessRepositoryStub.Object, new Mock<IEventRepository>().Object,new Mock<IIqRepository>().Object);
+        var sut = new OpenLockQueryHandler(userAccessRepositoryStub.Object, new Mock<IEventRepository>().Object,new Mock<IIqRepository>().Object, new Mock<ILogger<OpenLockQueryHandler>>().Object);
         
         var result =(await sut.HandleAsync(input));
         var expected = Errors.IqNotAssigned;
@@ -50,7 +51,7 @@ public class OpenLockQueryHandlerTests
         eventRepositoryStub.Setup(c => c.SetAsync(It.IsAny<EventRecord>()));
        
         var input = new OpenLockDto(Fixture.FakeUserWithOtherIq.UserId, Fixture.LockIdInput);
-        var sut = new OpenLockQueryHandler(userAccessRepositoryStub.Object, eventRepositoryStub.Object, iIqRepositoryStub.Object);
+        var sut = new OpenLockQueryHandler(userAccessRepositoryStub.Object, eventRepositoryStub.Object, iIqRepositoryStub.Object, new Mock<ILogger<OpenLockQueryHandler>>().Object);
         
         var result =(await sut.HandleAsync(input));
         
@@ -84,7 +85,7 @@ public class OpenLockQueryHandlerTests
         eventRepositoryStub.Setup(c => c.SetAsync(It.IsAny<EventRecord>()));
         
         var input = new OpenLockDto(user.UserId, Fixture.LockHighSecurityIdInput);
-        var sut = new OpenLockQueryHandler(userAccessRepositoryStub.Object, eventRepositoryStub.Object, iIqRepositoryStub.Object);
+        var sut = new OpenLockQueryHandler(userAccessRepositoryStub.Object, eventRepositoryStub.Object, iIqRepositoryStub.Object, new Mock<ILogger<OpenLockQueryHandler>>().Object);
         
         var result =(await sut.HandleAsync(input));
         
@@ -113,7 +114,7 @@ public class OpenLockQueryHandlerTests
             .ThrowsAsync(new Exception());
         
         var input = new OpenLockDto(Fixture.FakeUserWithCorrectIqHighAccess.UserId, Fixture.LockHighSecurityIdInput);
-        var sut = new OpenLockQueryHandler(userAccessRepositoryStub.Object, eventRepositoryStub.Object, iIqRepositoryStub.Object);
+        var sut = new OpenLockQueryHandler(userAccessRepositoryStub.Object, eventRepositoryStub.Object, iIqRepositoryStub.Object, new Mock<ILogger<OpenLockQueryHandler>>().Object);
         
         var result =(await sut.HandleAsync(input));
         
