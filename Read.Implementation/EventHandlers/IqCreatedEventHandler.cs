@@ -21,17 +21,23 @@ public class IqCreatedEventHandler:  IEventHandler<IqCreatedEvent> ,ICapSubscrib
     [CapSubscribe(nameof(IqCreatedEvent))]
     public async Task Handle(IqCreatedEvent @event)
     {
-        var newIq = new Iq
+        try
         {
-            Id = @event.IqId,
-            BuildingName = @event.BuildingName,
-            Locks = @event.Locks.Select(c=>new Lock
+            var newIq = new Iq
             {
-                Id = c,
-                Access = AccessLevel.Low
-            }).ToList()
-        };
-        await _iqRepository.SetAsync(newIq);//TODO 
-        _logger.LogInformation("Iq Created with name:{BuildingName}",@event.BuildingName);
+                Id = @event.IqId,
+                BuildingName = @event.BuildingName,
+                Locks = @event.Locks.Select(c=>new Lock
+                {
+                    Id = c,
+                    Access = AccessLevel.Low
+                }).ToList()
+            };
+            await _iqRepository.SetAsync(newIq);//TODO 
+        }
+        catch (Exception exception)
+        {
+            _logger.LogError(exception ,"an Exception ocurred when proccessing the event: {Event} ", @event);
+        }
     }
 }

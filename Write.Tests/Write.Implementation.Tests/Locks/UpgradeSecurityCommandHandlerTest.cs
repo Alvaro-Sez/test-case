@@ -1,4 +1,5 @@
 using DotNetCore.CAP;
+using Microsoft.Extensions.Logging;
 using Moq;
 using Shared;
 using Write.Contacts.Entities;
@@ -33,7 +34,7 @@ public class UpgradeSecurityCommandHandlerTest
         
         
         var input = new UpgradeSecurityCommand(Guid.NewGuid(), Fixture.FakeLockId.ToString());
-        var sut = new UpgradeSecurityCommandHandler(lockRepositoryStub.Object, userRepositoryStub.Object, unitOfWorkStub.Object, capPublisherStub.Object);
+        var sut = new UpgradeSecurityCommandHandler(lockRepositoryStub.Object, userRepositoryStub.Object, unitOfWorkStub.Object, capPublisherStub.Object, new Mock<ILogger<UpgradeSecurityCommandHandler>>().Object);
         var result = await sut.HandleAsync(input);
 
         var actualResult = result.Error;
@@ -60,7 +61,8 @@ public class UpgradeSecurityCommandHandlerTest
             .ReturnsAsync(Fixture.FakeLock);
         
         var input = new UpgradeSecurityCommand(Guid.NewGuid(), Fixture.FakeLockId.ToString());
-        var sut = new UpgradeSecurityCommandHandler(lockRepositoryStub.Object, userRepositoryStub.Object, unitOfWorkStub.Object, capPublisherStub.Object);
+        var sut = new UpgradeSecurityCommandHandler(lockRepositoryStub.Object, userRepositoryStub.Object, unitOfWorkStub.Object, capPublisherStub.Object, new Mock<ILogger<UpgradeSecurityCommandHandler>>().Object);
+        
         var result = await sut.HandleAsync(input);
         
         Assert.Equal(Access.High, Fixture.FakeLock.AccessLevel);
@@ -84,7 +86,7 @@ public class UpgradeSecurityCommandHandlerTest
             .ReturnsAsync(default(Lock));
         
         var input = new UpgradeSecurityCommand(Guid.NewGuid(), Fixture.FakeLockId.ToString());
-        var sut = new UpgradeSecurityCommandHandler(lockRepositoryStub.Object, userRepositoryStub.Object, unitOfWorkStub.Object, capPublisherStub.Object);
+        var sut = new UpgradeSecurityCommandHandler(lockRepositoryStub.Object, userRepositoryStub.Object, unitOfWorkStub.Object, capPublisherStub.Object, new Mock<ILogger<UpgradeSecurityCommandHandler>>().Object);
         var result = await sut.HandleAsync(input);
         var expected = Errors.LockNotExist;
         var actual = result.Error;

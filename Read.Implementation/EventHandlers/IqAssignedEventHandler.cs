@@ -25,17 +25,23 @@ public class IqAssignedEventHandler: IEventHandler<IqAssignedEvent> , ICapSubscr
     [CapSubscribe(nameof(IqAssignedEvent))]
     public async Task Handle(IqAssignedEvent @event)
     {
-        var user = await _userAccess.GetAsync(@event.UserId) ?? new UserAccess { UserId = @event.UserId };
-        var iq = await _iqRepository.GetAsync(@event.IqId);
-        
-        if(iq is null)
+        try
         {
-            throw new ApplicationException("Invalid state of data");
-        }
+            var user = await _userAccess.GetAsync(@event.UserId) ?? new UserAccess { UserId = @event.UserId };
+            var iq = await _iqRepository.GetAsync(@event.IqId);
+            if(iq is null)
+            {
+                throw new ApplicationException("Invalid state of data");
+            }
         
-        user.Iqs.Add(@event.IqId);
-        user.Iqs = user.Iqs.Distinct().ToList();
-        await _userAccess.SetAsync(user);
+            user.Iqs.Add(@event.IqId);
+            user.Iqs = user.Iqs.Distinct().ToList();
+            await _userAccess.SetAsync(user);
+        }
+        catch (Exception exception)
+        {
+            _logger.LogError(exception ,"an Exception ocurred when proccessing the event: {Event} ", @event);
+        }
         
         await _bindRequest.DeleteAsync(new BindIqRequest(@event.UserId, @event.BuildingName));
     }
