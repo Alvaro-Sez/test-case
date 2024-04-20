@@ -53,6 +53,7 @@ public class AcceptHigherAccessCommandHandler : ICommandHandler<AcceptHigherAcce
         {
             return false;
         }
+        // only higher users with the iq bound can manage requests over a user with this iq
         var acceptingUserOwnershipIqs = userAccepting.IqAssigned.Select(c => c.Id);
         var requestingUserOwnershipIqs = userRequesting.IqAssigned.Select(c => c.Id);
         return acceptingUserOwnershipIqs.Any(c => requestingUserOwnershipIqs.Contains(c));

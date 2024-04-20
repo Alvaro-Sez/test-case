@@ -11,12 +11,13 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Reference Include="DotNetCore.CAP">
-        <HintPath>..\..\..\..\..\.nuget\packages\dotnetcore.cap\8.0.0\lib\net8.0\DotNetCore.CAP.dll</HintPath>
-      </Reference>
       <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions">
         <HintPath>..\..\..\..\..\.nuget\packages\microsoft.extensions.dependencyinjection.abstractions\8.0.0\lib\net8.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
       </Reference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="DotNetCore.CAP" Version="8.0.0" />
     </ItemGroup>
 
 </Project>

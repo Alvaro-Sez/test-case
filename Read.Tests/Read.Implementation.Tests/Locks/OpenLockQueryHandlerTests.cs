@@ -59,11 +59,11 @@ public class OpenLockQueryHandlerTests
     }
    
     public static IEnumerable<object[]> Data =>
-            new List<object[]>
-            {
-                new object[] { Fixture.FakeUserWithCorrectIqLowAccess, false },
-                new object[] { Fixture.FakeUserWithCorrectIqHighAccess, true }
-            };
+        new List<object[]>
+        {
+            new object[] { Fixture.FakeUserWithCorrectIqLowAccess, false },
+            new object[] { Fixture.FakeUserWithCorrectIqHighAccess, true }
+        };
     
     [Theory]
     [MemberData(nameof(Data))]
@@ -108,7 +108,9 @@ public class OpenLockQueryHandlerTests
             .Setup(c => c.GetAllByIdAsync(It.IsAny<IEnumerable<Guid>>()))
             .ReturnsAsync(Fixture.FakeIqWithHighAccessLock);
         
-        eventRepositoryStub.Setup(c => c.SetAsync(It.IsAny<EventRecord>())).ThrowsAsync(new Exception());
+        eventRepositoryStub
+            .Setup(c => c.SetAsync(It.IsAny<EventRecord>()))
+            .ThrowsAsync(new Exception());
         
         var input = new OpenLockDto(Fixture.FakeUserWithCorrectIqHighAccess.UserId, Fixture.LockHighSecurityIdInput);
         var sut = new OpenLockQueryHandler(userAccessRepositoryStub.Object, eventRepositoryStub.Object, iIqRepositoryStub.Object);
