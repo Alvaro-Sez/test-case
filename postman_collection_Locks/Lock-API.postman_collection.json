@@ -1,0 +1,669 @@
+{
+	"info": {
+		"_postman_id": "c2a6a797-1b3a-4979-9259-3b1c4ff62c54",
+		"name": "Lock-API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "15897289"
+	},
+	"item": [
+		{
+			"name": "Auth Admin Steps (only test)",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"admin@gmail.com\",\n  \"password\": \"123456Aa?\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{LOCALHOST_DOCKER}}/register"
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json()",
+									"",
+									"if(pm.response.code == 200){",
+									"",
+									"    pm.environment.set(\"USER_TOKEN_ADMIN\", response.accessToken)",
+									"}",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"admin@gmail.com\",\n  \"password\": \"123456Aa?\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{LOCALHOST_DOCKER}}/login"
+					},
+					"response": []
+				},
+				{
+					"name": "Assign Admin (Test Only)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{USER_TOKEN_ADMIN}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{LOCALHOST_DOCKER}}/admin"
+					},
+					"response": []
+				},
+				{
+					"name": "Login With Role Admin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json()",
+									"",
+									"if(pm.response.code == 200){",
+									"",
+									"    pm.environment.set(\"USER_TOKEN_ADMIN\", response.accessToken)",
+									"}",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"admin@gmail.com\",\n  \"password\": \"123456Aa?\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{LOCALHOST_DOCKER}}/login"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Auth Low UserA",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"userLow@gmail.com\",\n  \"password\": \"123456Aa?\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{LOCALHOST_DOCKER}}/register"
+					},
+					"response": []
+				},
+				{
+					"name": "Login - Set Token UserA",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json()",
+									"",
+									"if(pm.response.code == 200){",
+									"",
+									"    pm.environment.set(\"USER_TOKEN_LOW\", response.accessToken)",
+									"}",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"userLow@gmail.com\",\n  \"password\": \"123456Aa?\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{LOCALHOST_DOCKER}}/login"
+					},
+					"response": []
+				},
+				{
+					"name": "Create IQ - BindingRequest",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{USER_TOKEN_LOW}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"buildingName\": \"NoopIq\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{LOCALHOST_DOCKER}}/BindRequest/Add"
+					},
+					"response": []
+				},
+				{
+					"name": "Get IQ Locks - UserA",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{USER_TOKEN_LOW}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{LOCALHOST_DOCKER}}/Locks/GetAll"
+					},
+					"response": []
+				},
+				{
+					"name": "Open Lock - UserA",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{USER_TOKEN_LOW}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"lockId\": \"f8bc0f36-f628-4a61-b32a-8db7ddfa77a8\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{LOCALHOST_DOCKER}}/Locks/OpenLock"
+					},
+					"response": []
+				},
+				{
+					"name": "Create HigherAccess Request - UserA",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{USER_TOKEN_LOW}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"iqId\": \"583acb56-c69b-42db-8569-3073dfbfcdef\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{LOCALHOST_DOCKER}}/Access/CreateUpgradeRequest"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Auth High UserB",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"userHigh@gmail.com\",\n  \"password\": \"123456Aa?\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{LOCALHOST_DOCKER}}/register"
+					},
+					"response": []
+				},
+				{
+					"name": "Login - Set Token UserB",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json()",
+									"",
+									"if(pm.response.code == 200){",
+									"",
+									"    pm.environment.set(\"USER_TOKEN_HIGH\", response.accessToken)",
+									"}",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"userHigh@gmail.com\",\n  \"password\": \"123456Aa?\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{LOCALHOST_DOCKER}}/login"
+					},
+					"response": []
+				},
+				{
+					"name": "Create IQ - BindingRequest",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{USER_TOKEN_HIGH}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"buildingName\": \"NoopIq\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{LOCALHOST_DOCKER}}/BindRequest/Add"
+					},
+					"response": []
+				},
+				{
+					"name": "Create HigherAccess Request - UserB",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{USER_TOKEN_HIGH}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"iqId\": \"583acb56-c69b-42db-8569-3073dfbfcdef\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{LOCALHOST_DOCKER}}/Access/CreateUpgradeRequest"
+					},
+					"response": []
+				},
+				{
+					"name": "Get IQ Locks - UserB",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{USER_TOKEN_HIGH}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{LOCALHOST_DOCKER}}/Locks/GetAll"
+					},
+					"response": []
+				},
+				{
+					"name": "Open Lock - UserB",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{USER_TOKEN_HIGH}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"lockId\": \"f8bc0f36-f628-4a61-b32a-8db7ddfa77a8\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{LOCALHOST_DOCKER}}/Locks/OpenLock"
+					},
+					"response": []
+				},
+				{
+					"name": "Upgrade Lock Security (High User)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{USER_TOKEN_HIGH}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"lockId\": \"f8bc0f36-f628-4a61-b32a-8db7ddfa77a8\"\n}\n//{\n//  \"userId\": \"ca0534f4-3152-40cd-9259-365de443b326\"\n//} Uncomment to check errors",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{LOCALHOST_DOCKER}}/Locks/UpgradeSecurity"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "BindRequests - Admin",
+			"item": [
+				{
+					"name": "Get IQBindRequests (Admin)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{USER_TOKEN_ADMIN}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{LOCALHOST_DOCKER}}/BindRequest/GetAll"
+					},
+					"response": []
+				},
+				{
+					"name": "Accept Binding IQ request (Admin)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{USER_TOKEN_ADMIN}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"buildingName\": \"NoopIq\",\n  \"userToBind\": \"e9401774-b66e-495f-98ff-3cec6da97c37\"\n}\n//",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{LOCALHOST_DOCKER}}/BindRequest/Accept"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "IQs",
+			"item": [
+				{
+					"name": "Create IQ (Admin)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{USER_TOKEN_ADMIN}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"buildingName\": \"NoopIq\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{LOCALHOST_DOCKER}}/Iq/Create"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Available IQs - Free",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{USER_TOKEN_ADMIN}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{LOCALHOST_DOCKER}}/Iq/GetAll"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Locks",
+			"item": [
+				{
+					"name": "Open Lock",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{USER_TOKEN_HIGH}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": \"03b5af7b-7a31-405a-ad02-00e060e629f4\",\n  \"lockId\": \"5a5e23ac-0b36-49ec-aa8d-0f5dade117bb\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{LOCALHOST_DOCKER}}/Locks/OpenLock"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Access Permissions",
+			"item": [
+				{
+					"name": "Get High Access Requests (Admin / High)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{USER_TOKEN_HIGH}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{LOCALHOST_DOCKER}}/Access/GetRequests"
+					},
+					"response": []
+				},
+				{
+					"name": "Create HigherAccess Request",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{CLAY_TOKEN}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"iqId\": \"string\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{LOCALHOST_DOCKER}}/Access/CreateUpgradeRequest"
+					},
+					"response": []
+				},
+				{
+					"name": "Accept Access Request (Admin / High)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{USER_TOKEN_HIGH}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": \"e9401774-b66e-495f-98ff-3cec6da97c37\"\n}\n//{\n//  \"userId\": \"ca0534f4-3152-40cd-9259-365de443b326\"\n//} Uncomment to check errors{\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{LOCALHOST_DOCKER}}/Access/AcceptRequest"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Events Recorded",
+			"item": [
+				{
+					"name": "Get Events By User (Admin)",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{USER_TOKEN_ADMIN}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{LOCALHOST_DOCKER}}/Locks/GetEvents/e9401774-b66e-495f-98ff-3cec6da97c37"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
