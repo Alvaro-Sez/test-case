@@ -59,11 +59,11 @@ Cons:
 
 - Very challenging to implement for me. I encountered numerous difficulties connecting everything, especially with the rabbit client library (the official), this library didn't have async production. As a workaround, I implemented a background service, but I faced significant challenges when communicating events to the query side, so I realised i would not have time to finish in this way so I gave up.
 
-
-#### So I decided to start again after 4 days of development and try to implement a distributed monolith (successfully, I hope):
 ___
 
 ## Explanation of the resultant design:
+
+#### So I decided to start again after 4 days of development and try to implement a distributed monolith (successfully, I hope):
 
 ![image](https://github.com/Alvaro-Sez/test-case/assets/87758728/8b08dedd-59ae-4672-a8bc-9527aefdfb58)
 
