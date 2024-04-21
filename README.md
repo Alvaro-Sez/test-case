@@ -65,8 +65,7 @@ ___
 
 #### So I decided to start again after 4 days of development and I tried to implement a distributed monolith (successfully, I hope):
 
-![image](https://github.com/Alvaro-Sez/test-case/assets/87758728/731be33a-5e3f-479f-bdb3-e1e87c9e44c6)
-
+![image](https://github.com/Alvaro-Sez/test-case/assets/87758728/5b7c28d7-9c79-4cd0-9abc-1fa7f70e1347)
 
 #### I attempted to define strict boundaries from the query side to the command side. The workflow is as follows:
 
@@ -75,9 +74,10 @@ ___
 - On the query side, we have event handlers that the worker will trigger, this handlers will process the events and register the changes in the database to maintain consistency between both sides of the data.
 
 ##### The query side manages two aspects of the application:
-- Intensive reads, such as when a request to unlock a door is made.
+- Intensive reads, such as when a request to unlock a door is received.
 - Storing events of every user interaction with the doors, as well as when a user's permission rights are raised.
 
+Id provider service: regarding to the idp, I implemented it with a in memory database, a user in the system only exist when is bound to an IQ
 
 
 Pros:
