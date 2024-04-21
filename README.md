@@ -2,7 +2,7 @@
 
 I will explain here my thoughts about the design and the architectural process in general.
 
-### Technical requirements:
+## Technical requirements:
 
 1. The application must prioritise strong security measures due to permissions handling, so the data storage has to be reliable, durable and correct.
 2. A critical aspect for achieving optimal user experience is minimising latency during the door unlocking process, requiring very low latency.
@@ -11,7 +11,7 @@ I will explain here my thoughts about the design and the architectural process i
 
 ___
 
-### Reasoning and Technology choice:
+## Reasoning and Technology choice:
 
 - To achieve requirements explained in (1), a SQL database is needed because we have to ensure referential integrity, durability, and correctness of the data as much as we can, and SQL databases provide ACID transactions to deal with these aspects.
 
@@ -23,11 +23,11 @@ ___
 
 ___
 
-### System Architecture and Implementation Process:
+## System Architecture and Implementation Process:
 
 After considering the reasoning provided in the previous paragraph, I determined that the CQRS pattern was well suited for this case and proceeded with its implementation.
 
-# Initially, I came up with the following design:
+#### Initially, I came up with the following design:
 
 FOTO
 
@@ -42,7 +42,7 @@ Cons:
 - Prone to inconsistent data between the two storages; as everything is in the same process, an exception during writing on one database could result in an inconsistent system.
 
 
-# So then I attempted (unsuccessfully) to implement this design:
+#### So then I attempted (unsuccessfully) to implement this design:
 
 FOTO
 
