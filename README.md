@@ -27,7 +27,8 @@ ___
 
 After considering the reasoning provided in the previous paragraph, I determined that the CQRS pattern was well suited for this case and proceeded with its implementation.
 
-#### Initially, I came up with the following design:
+### <ins> Initially, I came up with the following design: </ins>
+
 
 FOTO
 
@@ -42,7 +43,8 @@ Cons:
 - Prone to inconsistent data between the two storages; as everything is in the same process, an exception during writing on one database could result in an inconsistent system.
 
 
-#### So then I attempted (unsuccessfully) to implement this design:
+### <ins> So then I attempted (unsuccessfully) to implement this design: </ins>
+=
 
 FOTO
 
