@@ -117,156 +117,7 @@
 			]
 		},
 		{
-			"name": "Auth Low UserA",
-			"item": [
-				{
-					"name": "Register",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"email\": \"userLow@gmail.com\",\n  \"password\": \"123456Aa?\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": "{{LOCALHOST_DOCKER}}/register"
-					},
-					"response": []
-				},
-				{
-					"name": "Login - Set Token UserA",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"const response = pm.response.json()",
-									"",
-									"if(pm.response.code == 200){",
-									"",
-									"    pm.environment.set(\"USER_TOKEN_LOW\", response.accessToken)",
-									"}",
-									""
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						}
-					],
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"email\": \"userLow@gmail.com\",\n  \"password\": \"123456Aa?\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": "{{LOCALHOST_DOCKER}}/login"
-					},
-					"response": []
-				},
-				{
-					"name": "Create IQ - BindingRequest",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": {
-								"token": "{{USER_TOKEN_LOW}}"
-							}
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"buildingName\": \"NoopIq\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": "{{LOCALHOST_DOCKER}}/BindRequest/Add"
-					},
-					"response": []
-				},
-				{
-					"name": "Get IQ Locks - UserA",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": {
-								"token": "{{USER_TOKEN_LOW}}"
-							}
-						},
-						"method": "GET",
-						"header": [],
-						"url": "{{LOCALHOST_DOCKER}}/Locks/GetAll"
-					},
-					"response": []
-				},
-				{
-					"name": "Open Lock - UserA",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": {
-								"token": "{{USER_TOKEN_LOW}}"
-							}
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"lockId\": \"f8bc0f36-f628-4a61-b32a-8db7ddfa77a8\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": "{{LOCALHOST_DOCKER}}/Locks/OpenLock"
-					},
-					"response": []
-				},
-				{
-					"name": "Create HigherAccess Request - UserA",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": {
-								"token": "{{USER_TOKEN_LOW}}"
-							}
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"iqId\": \"583acb56-c69b-42db-8569-3073dfbfcdef\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": "{{LOCALHOST_DOCKER}}/Access/CreateUpgradeRequest"
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Auth High UserB",
+			"name": "Auth High User - A",
 			"item": [
 				{
 					"name": "Register",
@@ -335,7 +186,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"buildingName\": \"NoopIq\"\n}",
+							"raw": "{\n  \"buildingName\": \"aNewIq\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -359,7 +210,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"iqId\": \"583acb56-c69b-42db-8569-3073dfbfcdef\"\n}",
+							"raw": "{\n  \"iqId\": \"f4f332e2-9afc-418e-bece-6cfb5200e6d1\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -371,7 +222,7 @@
 					"response": []
 				},
 				{
-					"name": "Get IQ Locks - UserB",
+					"name": "Get IQ Locks - User A",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -386,7 +237,7 @@
 					"response": []
 				},
 				{
-					"name": "Open Lock - UserB",
+					"name": "Open Lock - User A",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -398,7 +249,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"lockId\": \"f8bc0f36-f628-4a61-b32a-8db7ddfa77a8\"\n}",
+							"raw": "{\n  \"lockId\": \"cfbef03b-bb61-4fe2-a2ec-9da3289b2c2e\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -422,7 +273,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"lockId\": \"f8bc0f36-f628-4a61-b32a-8db7ddfa77a8\"\n}\n//{\n//  \"userId\": \"ca0534f4-3152-40cd-9259-365de443b326\"\n//} Uncomment to check errors",
+							"raw": "{\n  \"lockId\": \"cfbef03b-bb61-4fe2-a2ec-9da3289b2c2e\"\n}\n//{\n//  \"userId\": \"ca0534f4-3152-40cd-9259-365de443b326\"\n//} Uncomment to check errors",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -430,6 +281,155 @@
 							}
 						},
 						"url": "{{LOCALHOST_DOCKER}}/Locks/UpgradeSecurity"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Auth Low User - B",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"userLow@gmail.com\",\n  \"password\": \"123456Aa?\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{LOCALHOST_DOCKER}}/register"
+					},
+					"response": []
+				},
+				{
+					"name": "Login - Set Token User B",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json()",
+									"",
+									"if(pm.response.code == 200){",
+									"",
+									"    pm.environment.set(\"USER_TOKEN_LOW\", response.accessToken)",
+									"}",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"userLow@gmail.com\",\n  \"password\": \"123456Aa?\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{LOCALHOST_DOCKER}}/login"
+					},
+					"response": []
+				},
+				{
+					"name": "Create IQ - BindingRequest",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{USER_TOKEN_LOW}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"buildingName\": \"aNewIq\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{LOCALHOST_DOCKER}}/BindRequest/Add"
+					},
+					"response": []
+				},
+				{
+					"name": "Get IQ Locks - User B",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{USER_TOKEN_LOW}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{LOCALHOST_DOCKER}}/Locks/GetAll"
+					},
+					"response": []
+				},
+				{
+					"name": "Open Lock - User B",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{USER_TOKEN_LOW}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"lockId\": \"cfbef03b-bb61-4fe2-a2ec-9da3289b2c2e\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{LOCALHOST_DOCKER}}/Locks/OpenLock"
+					},
+					"response": []
+				},
+				{
+					"name": "Create HigherAccess Request - UserA",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{USER_TOKEN_LOW}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"iqId\": \"f4f332e2-9afc-418e-bece-6cfb5200e6d1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{LOCALHOST_DOCKER}}/Access/CreateUpgradeRequest"
 					},
 					"response": []
 				}
@@ -479,7 +479,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"buildingName\": \"NoopIq\",\n  \"userToBind\": \"e9401774-b66e-495f-98ff-3cec6da97c37\"\n}\n//",
+							"raw": "{\n  \"buildingName\": \"aNewIq\",\n  \"userToBind\": \"f78a46ce-ab27-46aa-93dc-2a04733f3efb\"\n}\n//",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -508,7 +508,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"buildingName\": \"NoopIq\"\n}",
+							"raw": "{\n  \"buildingName\": \"aNewIq\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -584,43 +584,19 @@
 					"response": []
 				},
 				{
-					"name": "Create HigherAccess Request",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": {
-								"token": "{{CLAY_TOKEN}}"
-							}
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"iqId\": \"string\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": "{{LOCALHOST_DOCKER}}/Access/CreateUpgradeRequest"
-					},
-					"response": []
-				},
-				{
 					"name": "Accept Access Request (Admin / High)",
 					"request": {
 						"auth": {
 							"type": "bearer",
 							"bearer": {
-								"token": "{{USER_TOKEN_HIGH}}"
+								"token": "{{USER_TOKEN_ADMIN}}"
 							}
 						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"userId\": \"e9401774-b66e-495f-98ff-3cec6da97c37\"\n}\n//{\n//  \"userId\": \"ca0534f4-3152-40cd-9259-365de443b326\"\n//} Uncomment to check errors{\n",
+							"raw": "{\n  \"userId\": \"f5233514-ac45-4711-9ed2-19bcca0fcf77\"\n}\n//{\n//  \"userId\": \"ca0534f4-3152-40cd-9259-365de443b326\"\n//} Uncomment to check errors{\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -659,7 +635,7 @@
 								}
 							}
 						},
-						"url": "{{LOCALHOST_DOCKER}}/Locks/GetEvents/e9401774-b66e-495f-98ff-3cec6da97c37"
+						"url": "{{LOCALHOST_DOCKER}}/Locks/GetEvents/f78a46ce-ab27-46aa-93dc-2a04733f3efb"
 					},
 					"response": []
 				}
