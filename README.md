@@ -72,7 +72,7 @@ FOTO
 - We have a worker process that consumes the queue and has access to the code of the query side. This worker has no reference to any project on the write side; its sole purpose is to consume the queue and activate the code of the query side of the monolith.
 - On the query side, we have event handlers that the worker will trigger, this handlers will process the events and register the changes in the database to maintain consistency between both sides of the data.
 
-###### The query side manages two aspects of the application:
+##### The query side manages two aspects of the application:
 - Intensive reads, such as when a request to unlock a door is made.
 - Storing events of every user interaction with the doors, as well as when a user's permission rights are raised.
 
