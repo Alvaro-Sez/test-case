@@ -86,3 +86,11 @@ Cons:
 - Complex (at least for me).
 - Difficult to establish clear boundaries.
 
+___
+
+
+### Problems Experienced and General Thoughts:
+
+- Is my first time implementing CQRS and the complexity of the design was very time consuming, I ended up having less time for feature development, this resulted in having to sacrifice some features related to permission management to ensure the project completion. Additionally, I was asked to implement SQL migrations according to best practices, an area where I lack expertise, and unfortunately, time constraints prevented me from accomplishing this.
+- Concerning the boundaries I defined, I occasionally encountered difficulties with the structure of the data, realizing that I needed data only available on the other side of the monolith.
+- Starting again with a different approach made me realize that I have a strong bias regarding the difficulty of implementation. Despite understanding the theory, I tend to underestimate the complexity of implementation.
