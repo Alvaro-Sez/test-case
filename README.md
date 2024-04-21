@@ -46,8 +46,8 @@ Cons:
 
 ### <ins> So then I attempted (unsuccessfully) to implement this design: </ins>
 
+![image](https://github.com/Alvaro-Sez/test-case/assets/87758728/bf1f8a33-28f6-4572-a811-391317f3be74)
 
-FOTO
 
 Pros:
 
@@ -65,9 +65,10 @@ ___
 
 ## Explanation of the resultant design:
 
-#### I attempted to define strict boundaries from the query side to the command side. The workflow is as follows:
+![image](https://github.com/Alvaro-Sez/test-case/assets/87758728/8b08dedd-59ae-4672-a8bc-9527aefdfb58)
 
-FOTO
+
+#### I attempted to define strict boundaries from the query side to the command side. The workflow is as follows:
 
 - The command side receives a request and processes it. Subsequently, this side of the monolith publishes a message to a queue (RabbitMQ).
 - We have a worker process that consumes the queue and has access to the code of the query side. This worker has no reference to any project on the write side; its sole purpose is to consume the queue and activate the code of the query side of the monolith.
