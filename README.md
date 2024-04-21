@@ -66,6 +66,8 @@ ___
 
 #### I attempted to define strict boundaries from the query side to the command side. The workflow is as follows:
 
+FOTO
+
 - The command side receives a request and processes it. Subsequently, this side of the monolith publishes a message to a queue (RabbitMQ).
 - We have a worker process that consumes the queue and has access to the code of the query side. This worker has no reference to any project on the write side; its sole purpose is to consume the queue and activate the code of the query side of the monolith.
 - On the query side, we have event handlers that the worker will trigger, this handlers will process the events and register the changes in the database to maintain consistency between both sides of the data.
@@ -74,7 +76,7 @@ ___
 - Intensive reads, such as when a request to unlock a door is made.
 - Storing events of every user interaction with the doors, as well as when a user's permission rights are raised.
 
-FOTO
+
 
 Pros:
 
@@ -93,4 +95,4 @@ ___
 
 - Is my first time implementing CQRS and the complexity of the design was very time consuming, I ended up having less time for feature development, this resulted in having to sacrifice some features related to permission management to ensure the project completion. Additionally, I was asked to implement SQL migrations according to best practices, an area where I lack expertise, and unfortunately, time constraints prevented me from accomplishing this.
 - Concerning the boundaries I defined, I occasionally encountered difficulties with the structure of the data, realizing that I needed data only available on the other side of the monolith.
-- Starting again with a different approach made me realize that I have a strong bias regarding the difficulty of implementation. Despite understanding the theory, I tend to underestimate the complexity of implementation.
+- I also want to say that having to start again with a different approach made me realise that I have a strong bias regarding to the difficulty of the implementation, when I think that I understand the theory, I completly understimate the complexity of the implementation.
