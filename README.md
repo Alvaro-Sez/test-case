@@ -65,7 +65,7 @@ ___
 
 #### So I decided to start again after 4 days of development and try to implement a distributed monolith (successfully, I hope):
 
-![image](https://github.com/Alvaro-Sez/test-case/assets/87758728/fdd610f7-6782-45f2-82ce-54120223dcfb)
+![image](https://github.com/Alvaro-Sez/test-case/assets/87758728/731be33a-5e3f-479f-bdb3-e1e87c9e44c6)
 
 
 #### I attempted to define strict boundaries from the query side to the command side. The workflow is as follows:
