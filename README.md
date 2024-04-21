@@ -57,7 +57,7 @@ Pros:
 
 Cons:
 
-- Very challenging to implement for me. I encountered numerous difficulties connecting everything, especially with the rabbit client library (the official), this library didn't have async production. As a workaround, I implemented a background service, but I faced significant challenges when communicating events to the query side, so I realised i would not have time to finish in this way so I gave up.
+- Very challenging to implement for me. I encountered numerous difficulties connecting everything, especially with the rabbit client library (the official), this library didn't have async production. As a workaround, I implemented a background service, but I faced significant challenges when communicating events to the query side, so I realised i would not have time to finish in this way so I decide to take a different approach.
 
 ___
 
