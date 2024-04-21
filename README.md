@@ -44,7 +44,7 @@ Cons:
 
 
 ### <ins> So then I attempted (unsuccessfully) to implement this design: </ins>
-=
+
 
 FOTO
 
@@ -57,3 +57,32 @@ Pros:
 Cons:
 
 - Very challenging to implement for me. I encountered numerous difficulties connecting everything, especially with the rabbit client library (the official), this library didn't have async production. As a workaround, I implemented a background service, but I faced significant challenges when communicating events to the query side, so I realised i would not have time to finish in this way so I gave up.
+
+
+#### So I decided to start again after 4 days of development and try to implement a distributed monolith (successfully, I hope):
+___
+
+## Explanation of the resultant design:
+
+#### I attempted to define strict boundaries from the query side to the command side. The workflow is as follows:
+
+- The command side receives a request and processes it. Subsequently, this side of the monolith publishes a message to a queue (RabbitMQ).
+- We have a worker process that consumes the queue and has access to the code of the query side. This worker has no reference to any project on the write side; its sole purpose is to consume the queue and activate the code of the query side of the monolith.
+- On the query side, we have event handlers that the worker will trigger, this handlers will process the events and register the changes in the database to maintain consistency between both sides of the data.
+
+###### The query side manages two aspects of the application:
+- Intensive reads, such as when a request to unlock a door is made.
+- Storing events of every user interaction with the doors, as well as when a user's permission rights are raised.
+
+FOTO
+
+Pros:
+
+- Facilitates development; integration is enhanced as the command side has no reference to any project on the query side, and the query side only references the domain of the command side, just to use the contracts of the events.
+- Supports scalability well; we can duplicate the code of each side into two different repositories and prepare separate instances.
+
+Cons:
+
+- Complex (at least for me).
+- Difficult to establish clear boundaries.
+
