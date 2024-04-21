@@ -1,4 +1,4 @@
-#### Test case
+ #### Test case
 
 I will explain here my thoughts about the design and the architectural process in general.
 
@@ -30,7 +30,8 @@ After considering the reasoning provided in the previous paragraph, I determined
 ### <ins> Initially, I came up with the following design: </ins>
 
 
-FOTO
+![image](https://github.com/Alvaro-Sez/test-case/assets/87758728/078b15f1-9f68-4634-93c4-a784aca64d21)
+
 
 Pros:
 
